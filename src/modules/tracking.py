@@ -77,7 +77,7 @@ class Tracking(object):
         for obj in self.tracking_objects:
             det = None
             t_start = time.time()
-            while not obj.is_detected(0,det):
+            while det is None:
                 # capture frame and region of interest, specified by crop region
                 [self.frame,self.roi] = self.capture_frame()
                 # detect april tags in frame
@@ -85,12 +85,13 @@ class Tracking(object):
                 ids_detected = [x['id'] for x in detections]
                 if obj.id not in ids_detected:
                     det = None
-                else:
-                    det = detections[ids_detected.index(obj.id)]
-                    print('Smarticle {} detected in frame'.format(obj.id))
                 if (time.time()-t_start)>5:
                     print('Smarticle {}  could not be found in frame'.format(obj.id))
                     break
+
+            det = detections[ids_detected.index(obj.id)]
+            obj.init_detection(det)
+            print('Tag {} detected in frame'.format(obj.id))
 
     def capture_frame(self):
         [x, y, w, h] = self.roi_dims

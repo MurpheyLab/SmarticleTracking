@@ -12,7 +12,7 @@ import time
 class Tracking(object):
 
 
-    def __init__(self,video_source, smart_ids, save_video = None,\
+    def __init__(self,video_source, tag_ids, save_video = None,\
     show_video = False, frame_width=1280, frame_height=720, fps = 4,\
     history_len = None, roi_dims = None):
 
@@ -20,9 +20,9 @@ class Tracking(object):
         self.show_video = show_video
         self.history_len = history_len
 
-        # Make sure smart_ids are in ascending order
-        self.smart_ids = deepcopy(smart_ids)
-        self.smart_ids.sort()
+        # Make sure tag_ids are in ascending order
+        self.tag_ids = deepcopy(tag_ids)
+        self.tag_ids.sort()
         # save frame dimensions and fps as attributes
         self.frame_width = frame_width
         self.frame_height = frame_height
@@ -69,7 +69,7 @@ class Tracking(object):
         self.detector = apriltag("tagStandard41h12")
 
         # initialize tracking objects
-        self.tracking_objects = [Detection(smart_id, self.frame_height, history_length=self.history_len) for smart_id in self.smart_ids]
+        self.tracking_objects = [Detection(tag_id, self.frame_height, history_length=self.history_len) for tag_id in self.tag_ids]
 
         # set t0 for tracking data
         self.t0 = time.time()

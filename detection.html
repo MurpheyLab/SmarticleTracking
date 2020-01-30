@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.4" />
+<title>detection API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>detection</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># detection.py
+# Smarticle tracking w/ April tags
+# Created Nov. 12, 2019
+# Alex Samland (alexsamland@u.northwestern.edu)
+
+import numpy as np
+import numpy.matlib
+from collections import deque
+
+class Tag(object):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    This class is a data struct for each April Tag in the frame to store its current state
+    (x, y, theta) as well as a timestamped history of the state. The class also linearly
+    interpolates over missed detections to smooth the data.
+
+    **Public Attributes (for the user):**
+
+    * **id**: April Tag ID (e.g. 1, 3, 16). This corresponds to the smarticle ID
+    * **x**: state (x, y, theta) of most recent detection of tag
+    * **t**: time of most recent detection of tag
+    * **history**: history of states (x,y, theta) of tag
+    * **t_history**: history of detection times of tag
+
+    **Private Attributes (for the class):**
+
+    * **_frame_height**: used to flip y axis so that origin is in bottom left corner of frames
+    * **_missed frames**: used for keeping track of missed frames that require linear interpolation
+    * **_object_detected**: flag for indicating whether tag has been initially detected
+    &#39;&#39;&#39;
+
+    def __init__(self, ID, frame_height, history_length=None):
+        &#39;&#39;&#39;
+        ## Arguments
+        ---
+
+        | Argument         | Type    | Description                           | Default Value  |
+        | :------          | :--     | :---------                            | :-----------   |
+        | ID               | `int`   | ID of corresponding April Tag         | N/A            |
+        | frame_height     | `int`   | Pixel height of frame                 | N/A            |
+        | history_length   | `int`   | Optional max history length to record | `None`         |
+        |&lt;img width=350/&gt;|&lt;img width=250/&gt;|&lt;img width=800/&gt;|&lt;img width=500/&gt;|
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+
+        # attributes to be accessed by user (Public)
+        self.id = ID
+        self.x = np.zeros(3)
+        self.t = 0
+        # use a deque data structure for history
+        # set a max length of 150 elements or about 10s of data
+        self.history = deque(maxlen=history_length)
+        self.t_history = deque(maxlen=history_length)
+
+        # attributes to be used within class (Private)
+        self._frame_height = frame_height;
+        self._missed_frames = 0
+        self._object_detected = False
+
+    def _get_state(det, offset=None):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Returns state (x, y, theta) given detection and offset
+
+        ## Arguments
+        ---
+
+        | Argument| Type           | Description                                                                 | Default Value  |
+        | :------ | :--            | :---------                                                                  | :-----------   |
+        | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
+        | offset  | `list` of `int`| Two element list that specifies offset from detection frame to global frame | `None`         |
+        |&lt;img width=250/&gt;|&lt;img width=350/&gt;|&lt;img width=1400/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        `np.array` state [x, y, theta]
+        &#39;&#39;&#39;
+        # x and y position of center of tag
+        center = det[&#39;center&#39;]
+        # flip y axis from camera to put origin in bottom left corner
+        center[1]=self.frame_height-center[1]
+        # point at center top of tag is average of top right and top left corners
+        center_top = (det[&#39;lb-rb-rt-lt&#39;][2]+det[&#39;lb-rb-rt-lt&#39;][3])/2.
+        center_top[1]=self.frame_height-center_top[1]
+        # calculate theta as angle between center and cetner top and angle wrap so it is between 0 and 2pi
+        theta = np.mod(np.arctan2(center_top[1]-center[1],center_top[0]-center[0]),2*np.pi)
+        # record angle so that there are no discontinuities (prevent wrapping between 0 and 2*pi)
+        dtheta = theta-self.x[2]
+        dtheta = np.mod((np.pi+dtheta),2*np.pi)-np.pi
+        new_theta = self.x[2]+dtheta
+        return np.append(center+offset,new_theta)
+
+    def _smooth_missed_frames():
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        smooths data by linearly interpolating over missed frames
+
+        ## Arguments
+        ---
+        N/A
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        # time of last sucessful detection before this most recent one
+        t0 = self.t_history[-(1+self.missed_frames)]
+        # calculate slope between points
+        m = (self.x-self.history[-(1+self.missed_frames)])/(self.t-t0)
+        # iterate through all of the missed frames
+        while self.missed_frames &gt; 0:
+            # calculate dt between missed frame and t0
+            dt = self.t_history[-(self.missed_frames)] - t0
+            # apply linear smoothing
+            self.history[-(self.missed_frames)] += m*dt
+            # move to next missed frame
+            self.missed_frames-=1
+
+
+    def init_detection(self, t, det, offset = None):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Initializes detections of tags with initial state and time of tag
+
+        ## Arguments
+        ---
+
+        | Argument| Type           | Description                                                                 | Default Value  |
+        | :------ | :--            | :---------                                                                  | :-----------   |
+        | t       | `int`          | Time of detection                                                           | N/A            |
+        | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
+        | offset  | `list` of `int`| Two element list that specifies offset from detection frame to global frame | `None`         |
+        |&lt;img width=250/&gt;|&lt;img width=350/&gt;|&lt;img width=1400/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        self.x = self._get_state(det,offset)
+        self.t = t
+        # add initial pose and time to history
+        self.t_history.append(self.t)
+        self.history.append(self.x)
+        # set detection flag to true
+        self._object_detected = True
+
+    def add_timestep(self, t, det=None, offset = None):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Updates current state and history lists based on provided detection and also handles linear interpolation for missing detections
+
+        ## Arguments
+        ---
+
+        | Argument| Type           | Description                                                                 | Default Value  |
+        | :------ | :--            | :---------                                                                  | :-----------   |
+        | t       | `int`          | Time of detection                                                           | N/A            |
+        | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
+        | offset  | `list` of `int`| Two element list that specifies offset from global frame to detection frame | `None`         |
+        |&lt;img width=250/&gt;|&lt;img width=350/&gt;|&lt;img width=1400/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        assert self.object_detected is True, &#34;Object not initially detected&#34;
+
+        self.t = t
+        # if offset is not provided, set offset to [0, 00] (no offset)
+        if offset is None:
+            offset = np.array([0,0])
+
+        # if object is not detected in this time frame carry over last beleif of
+        # object state and increment the missed frames counter
+        if det is None:
+            self.missed_frames +=1
+        else:
+            self.x = self._get_state(det,offset)
+            # linearly smooth missed frames
+            if self.missed_frames &gt; 0:
+                self._smooth_missed_frames()
+            # add most recent time step to history
+        self.history.append(self.x)
+        self.t_history.append(self.t)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="detection.Tag"><code class="flex name class">
+<span>class <span class="ident">Tag</span></span>
+<span>(</span><span>ID, frame_height, history_length=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>This class is a data struct for each April Tag in the frame to store its current state
+(x, y, theta) as well as a timestamped history of the state. The class also linearly
+interpolates over missed detections to smooth the data.</p>
+<p><strong>Public Attributes (for the user):</strong></p>
+<ul>
+<li><strong>id</strong>: April Tag ID (e.g. 1, 3, 16). This corresponds to the smarticle ID</li>
+<li><strong>x</strong>: state (x, y, theta) of most recent detection of tag</li>
+<li><strong>t</strong>: time of most recent detection of tag</li>
+<li><strong>history</strong>: history of states (x,y, theta) of tag</li>
+<li><strong>t_history</strong>: history of detection times of tag</li>
+</ul>
+<p><strong>Private Attributes (for the class):</strong></p>
+<ul>
+<li><strong>_frame_height</strong>: used to flip y axis so that origin is in bottom left corner of frames</li>
+<li><strong>_missed frames</strong>: used for keeping track of missed frames that require linear interpolation</li>
+<li><strong>_object_detected</strong>: flag for indicating whether tag has been initially detected</li>
+</ul>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">ID</td>
+<td align="left"><code>int</code></td>
+<td align="left">ID of corresponding April Tag</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">frame_height</td>
+<td align="left"><code>int</code></td>
+<td align="left">Pixel height of frame</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">history_length</td>
+<td align="left"><code>int</code></td>
+<td align="left">Optional max history length to record</td>
+<td align="left"><code>None</code></td>
+</tr>
+<tr>
+<td align="left"><img width=350/></td>
+<td align="left"><img width=250/></td>
+<td align="left"><img width=800/></td>
+<td align="left"><img width=500/></td>
+</tr>
+</tbody>
+</table>
+<h2 id="returns">Returns</h2>
+<hr>
+<p>void</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Tag(object):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    This class is a data struct for each April Tag in the frame to store its current state
+    (x, y, theta) as well as a timestamped history of the state. The class also linearly
+    interpolates over missed detections to smooth the data.
+
+    **Public Attributes (for the user):**
+
+    * **id**: April Tag ID (e.g. 1, 3, 16). This corresponds to the smarticle ID
+    * **x**: state (x, y, theta) of most recent detection of tag
+    * **t**: time of most recent detection of tag
+    * **history**: history of states (x,y, theta) of tag
+    * **t_history**: history of detection times of tag
+
+    **Private Attributes (for the class):**
+
+    * **_frame_height**: used to flip y axis so that origin is in bottom left corner of frames
+    * **_missed frames**: used for keeping track of missed frames that require linear interpolation
+    * **_object_detected**: flag for indicating whether tag has been initially detected
+    &#39;&#39;&#39;
+
+    def __init__(self, ID, frame_height, history_length=None):
+        &#39;&#39;&#39;
+        ## Arguments
+        ---
+
+        | Argument         | Type    | Description                           | Default Value  |
+        | :------          | :--     | :---------                            | :-----------   |
+        | ID               | `int`   | ID of corresponding April Tag         | N/A            |
+        | frame_height     | `int`   | Pixel height of frame                 | N/A            |
+        | history_length   | `int`   | Optional max history length to record | `None`         |
+        |&lt;img width=350/&gt;|&lt;img width=250/&gt;|&lt;img width=800/&gt;|&lt;img width=500/&gt;|
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+
+        # attributes to be accessed by user (Public)
+        self.id = ID
+        self.x = np.zeros(3)
+        self.t = 0
+        # use a deque data structure for history
+        # set a max length of 150 elements or about 10s of data
+        self.history = deque(maxlen=history_length)
+        self.t_history = deque(maxlen=history_length)
+
+        # attributes to be used within class (Private)
+        self._frame_height = frame_height;
+        self._missed_frames = 0
+        self._object_detected = False
+
+    def _get_state(det, offset=None):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Returns state (x, y, theta) given detection and offset
+
+        ## Arguments
+        ---
+
+        | Argument| Type           | Description                                                                 | Default Value  |
+        | :------ | :--            | :---------                                                                  | :-----------   |
+        | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
+        | offset  | `list` of `int`| Two element list that specifies offset from detection frame to global frame | `None`         |
+        |&lt;img width=250/&gt;|&lt;img width=350/&gt;|&lt;img width=1400/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        `np.array` state [x, y, theta]
+        &#39;&#39;&#39;
+        # x and y position of center of tag
+        center = det[&#39;center&#39;]
+        # flip y axis from camera to put origin in bottom left corner
+        center[1]=self.frame_height-center[1]
+        # point at center top of tag is average of top right and top left corners
+        center_top = (det[&#39;lb-rb-rt-lt&#39;][2]+det[&#39;lb-rb-rt-lt&#39;][3])/2.
+        center_top[1]=self.frame_height-center_top[1]
+        # calculate theta as angle between center and cetner top and angle wrap so it is between 0 and 2pi
+        theta = np.mod(np.arctan2(center_top[1]-center[1],center_top[0]-center[0]),2*np.pi)
+        # record angle so that there are no discontinuities (prevent wrapping between 0 and 2*pi)
+        dtheta = theta-self.x[2]
+        dtheta = np.mod((np.pi+dtheta),2*np.pi)-np.pi
+        new_theta = self.x[2]+dtheta
+        return np.append(center+offset,new_theta)
+
+    def _smooth_missed_frames():
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        smooths data by linearly interpolating over missed frames
+
+        ## Arguments
+        ---
+        N/A
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        # time of last sucessful detection before this most recent one
+        t0 = self.t_history[-(1+self.missed_frames)]
+        # calculate slope between points
+        m = (self.x-self.history[-(1+self.missed_frames)])/(self.t-t0)
+        # iterate through all of the missed frames
+        while self.missed_frames &gt; 0:
+            # calculate dt between missed frame and t0
+            dt = self.t_history[-(self.missed_frames)] - t0
+            # apply linear smoothing
+            self.history[-(self.missed_frames)] += m*dt
+            # move to next missed frame
+            self.missed_frames-=1
+
+
+    def init_detection(self, t, det, offset = None):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Initializes detections of tags with initial state and time of tag
+
+        ## Arguments
+        ---
+
+        | Argument| Type           | Description                                                                 | Default Value  |
+        | :------ | :--            | :---------                                                                  | :-----------   |
+        | t       | `int`          | Time of detection                                                           | N/A            |
+        | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
+        | offset  | `list` of `int`| Two element list that specifies offset from detection frame to global frame | `None`         |
+        |&lt;img width=250/&gt;|&lt;img width=350/&gt;|&lt;img width=1400/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        self.x = self._get_state(det,offset)
+        self.t = t
+        # add initial pose and time to history
+        self.t_history.append(self.t)
+        self.history.append(self.x)
+        # set detection flag to true
+        self._object_detected = True
+
+    def add_timestep(self, t, det=None, offset = None):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Updates current state and history lists based on provided detection and also handles linear interpolation for missing detections
+
+        ## Arguments
+        ---
+
+        | Argument| Type           | Description                                                                 | Default Value  |
+        | :------ | :--            | :---------                                                                  | :-----------   |
+        | t       | `int`          | Time of detection                                                           | N/A            |
+        | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
+        | offset  | `list` of `int`| Two element list that specifies offset from global frame to detection frame | `None`         |
+        |&lt;img width=250/&gt;|&lt;img width=350/&gt;|&lt;img width=1400/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        assert self.object_detected is True, &#34;Object not initially detected&#34;
+
+        self.t = t
+        # if offset is not provided, set offset to [0, 00] (no offset)
+        if offset is None:
+            offset = np.array([0,0])
+
+        # if object is not detected in this time frame carry over last beleif of
+        # object state and increment the missed frames counter
+        if det is None:
+            self.missed_frames +=1
+        else:
+            self.x = self._get_state(det,offset)
+            # linearly smooth missed frames
+            if self.missed_frames &gt; 0:
+                self._smooth_missed_frames()
+            # add most recent time step to history
+        self.history.append(self.x)
+        self.t_history.append(self.t)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="detection.Tag.add_timestep"><code class="name flex">
+<span>def <span class="ident">add_timestep</span></span>(<span>self, t, det=None, offset=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>Updates current state and history lists based on provided detection and also handles linear interpolation for missing detections</p>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">t</td>
+<td align="left"><code>int</code></td>
+<td align="left">Time of detection</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">det</td>
+<td align="left"><code>dict</code></td>
+<td align="left">Detection of tag from AprilTag library</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">offset</td>
+<td align="left"><code>list</code> of <code>int</code></td>
+<td align="left">Two element list that specifies offset from global frame to detection frame</td>
+<td align="left"><code>None</code></td>
+</tr>
+<tr>
+<td align="left"><img width=250/></td>
+<td align="left"><img width=350/></td>
+<td align="left"><img width=1400/></td>
+<td align="left"><img width=250/></td>
+</tr>
+</tbody>
+</table>
+<h2 id="returns">Returns</h2>
+<hr>
+<p>void</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_timestep(self, t, det=None, offset = None):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Updates current state and history lists based on provided detection and also handles linear interpolation for missing detections
+
+    ## Arguments
+    ---
+
+    | Argument| Type           | Description                                                                 | Default Value  |
+    | :------ | :--            | :---------                                                                  | :-----------   |
+    | t       | `int`          | Time of detection                                                           | N/A            |
+    | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
+    | offset  | `list` of `int`| Two element list that specifies offset from global frame to detection frame | `None`         |
+    |&lt;img width=250/&gt;|&lt;img width=350/&gt;|&lt;img width=1400/&gt;|&lt;img width=250/&gt;|
+
+    ## Returns
+    ---
+    void
+    &#39;&#39;&#39;
+    assert self.object_detected is True, &#34;Object not initially detected&#34;
+
+    self.t = t
+    # if offset is not provided, set offset to [0, 00] (no offset)
+    if offset is None:
+        offset = np.array([0,0])
+
+    # if object is not detected in this time frame carry over last beleif of
+    # object state and increment the missed frames counter
+    if det is None:
+        self.missed_frames +=1
+    else:
+        self.x = self._get_state(det,offset)
+        # linearly smooth missed frames
+        if self.missed_frames &gt; 0:
+            self._smooth_missed_frames()
+        # add most recent time step to history
+    self.history.append(self.x)
+    self.t_history.append(self.t)</code></pre>
+</details>
+</dd>
+<dt id="detection.Tag.init_detection"><code class="name flex">
+<span>def <span class="ident">init_detection</span></span>(<span>self, t, det, offset=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>Initializes detections of tags with initial state and time of tag</p>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">t</td>
+<td align="left"><code>int</code></td>
+<td align="left">Time of detection</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">det</td>
+<td align="left"><code>dict</code></td>
+<td align="left">Detection of tag from AprilTag library</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">offset</td>
+<td align="left"><code>list</code> of <code>int</code></td>
+<td align="left">Two element list that specifies offset from detection frame to global frame</td>
+<td align="left"><code>None</code></td>
+</tr>
+<tr>
+<td align="left"><img width=250/></td>
+<td align="left"><img width=350/></td>
+<td align="left"><img width=1400/></td>
+<td align="left"><img width=250/></td>
+</tr>
+</tbody>
+</table>
+<h2 id="returns">Returns</h2>
+<hr>
+<p>void</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def init_detection(self, t, det, offset = None):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Initializes detections of tags with initial state and time of tag
+
+    ## Arguments
+    ---
+
+    | Argument| Type           | Description                                                                 | Default Value  |
+    | :------ | :--            | :---------                                                                  | :-----------   |
+    | t       | `int`          | Time of detection                                                           | N/A            |
+    | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
+    | offset  | `list` of `int`| Two element list that specifies offset from detection frame to global frame | `None`         |
+    |&lt;img width=250/&gt;|&lt;img width=350/&gt;|&lt;img width=1400/&gt;|&lt;img width=250/&gt;|
+
+    ## Returns
+    ---
+    void
+    &#39;&#39;&#39;
+    self.x = self._get_state(det,offset)
+    self.t = t
+    # add initial pose and time to history
+    self.t_history.append(self.t)
+    self.history.append(self.x)
+    # set detection flag to true
+    self._object_detected = True</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="detection.Tag" href="#detection.Tag">Tag</a></code></h4>
+<ul class="">
+<li><code><a title="detection.Tag.add_timestep" href="#detection.Tag.add_timestep">add_timestep</a></code></li>
+<li><code><a title="detection.Tag.init_detection" href="#detection.Tag.init_detection">init_detection</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.4</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

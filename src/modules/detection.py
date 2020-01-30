@@ -7,7 +7,7 @@ import numpy as np
 import numpy.matlib
 from collections import deque
 
-class Tag(object):
+class TrackingObject(object):
     '''
     ## Description
     ---

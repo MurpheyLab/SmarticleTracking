@@ -4,31 +4,55 @@
 # Alex Samland (alexsamland@u.northwestern.edu)
 import cv2
 from copy import deepcopy
-from apriltag import *
-from modules.detection import *
+# from apriltag import *
+from modules.tracking_object import *
 import time
 
 
 class Tracking(object):
+    '''
+    Class for tracking multiple AprilTag objects and managing use of webcam with OpenCV
+    '''
 
 
-    def __init__(self,video_source, tag_ids, save_video = None,\
-    show_video = False, frame_width=1280, frame_height=720, fps = 4,\
-    history_len = None, roi_dims = None):
+    def __init__(self, tag_ids, frame_width, frame_height, fps,\
+     video_source=0, save_video=None, show_video=False,\
+     history_len=None, roi_dims=None):
+        '''
+        ## Description
+        ---
+        Initializes detections of tags with initial state and time of tag at first detection
 
+        ## Arguments
+        ---
+
+        | Argument     | Type            | Description                                                                            | Default Value  |
+        | :------      | :--             | :---------                                                                             | :-----------   |
+        | tag_ids      | `list` of `int` | List of tag IDs to track                                                               | N/A            |
+        | frame_width  | `int`           | Frame width of camera capture                                                          | N/A            |
+        | frame_height | `int`           | Frame height of camera capture                                                         | N/A            |
+        | fps          | `int`           | Frames per second of camera capture                                                    | N/A            |
+        | video_source | `string`        | (Optional) Path of input video file                                                    | 0              |
+        | save_video   | `string`        | (Optional) Save video to specified path                                                | `None`         |
+        | show_video   | `bool`          | (Optional) Show video to screen if `True`                                              | `False`        |
+        | history_len  | `int`           | (Optional) Max length of tracking history to be saved                                  | `None`         |
+        | roi_dims     | `list` of `int` | (Optional) Two element list that specifies offset from detection frame to global frame | `None`         |
+        |<img width=250/>|<img width=350/>|<img width=1400/>|<img width=250/>|
+
+        '''
+
+        # save as attributes
         self.save_video = save_video
         self.show_video = show_video
         self.history_len = history_len
-
-        # Make sure tag_ids are in ascending order
-        self.tag_ids = deepcopy(tag_ids)
-        self.tag_ids.sort()
-        # save frame dimensions and fps as attributes
         self.frame_width = frame_width
         self.frame_height = frame_height
         self.fps = fps
 
-        # initialize camera
+        # Make sure tag_ids are in ascending order
+        self.tag_ids = deepcopy(tag_ids)
+        self.tag_ids.sort()
+
         self.init_camera(video_source)
 
         # region of interest parameters: should be 4 element list of the form: [x, y, w, h]
@@ -43,7 +67,7 @@ class Tracking(object):
         self.init_tracking()
 
 
-    def init_camera(self, video_source):
+    def _init_camera(self, video_source):
         '''Initializes camera with specified settings as tuned tracking settings
         (ie. turns off autofocus, sets brightness and contrast)'''
         # Camera Settings
@@ -62,14 +86,14 @@ class Tracking(object):
         else:
             self.out = None
 
-    def init_tracking(self):
+    def _init_tracking(self):
         '''Initializes April tag detector and creates tracking objects.
         Additionally gets initial position of objects and sets time for t0'''
-        # April Tag Detector Object
+        # April Tag Detector Object, specify tag family
         self.detector = apriltag("tagStandard41h12")
 
         # initialize tracking objects
-        self.tracking_objects = [Detection(tag_id, self.frame_height, history_length=self.history_len) for tag_id in self.tag_ids]
+        self.tracking_objects = [TrackingObject(tag_id, self.frame_height, history_length=self.history_len) for tag_id in self.tag_ids]
 
         # set t0 for tracking data
         self.t0 = time.time()
@@ -94,60 +118,156 @@ class Tracking(object):
             print('Tag {} detected in frame'.format(obj.id))
 
     def capture_frame(self):
+        '''
+        ## Description
+        ---
+        Captures frame with attribute `cap` and crops according to `roi_dims`
+
+        ## Arguments
+        ---
+        N/A
+
+        ## Returns
+        ---
+        3D `np.array` of RGB pixel values for whole frame
+        3D `np.array` of RGB pixel values for whole specified region of interest (roi)
+
+        '''
+        # region of interest (crop region) dimensions
         [x, y, w, h] = self.roi_dims
         ret, frame = self.cap.read()
+        # save cropped frame
         roi = frame[y:y+h, x:x+w]
         return [frame,roi]
 
     def detect_frame(self,frame):
+        '''
+        ## Description
+        ---
+        Returns state (x, y, theta) given detection and offset
+
+        ## Arguments
+        ---
+
+        | Argument| Type         | Description              | Default Value  |
+        | :------ | :--          | :---------               | :-----------   |
+        | frame     | `np.array` | Frame to detect tags in  | N/A            |
+        |<img width=250/>|<img width=350/>|<img width=1400/>|<img width=250/>|
+
+        ## Returns
+        ---
+        `list` of `dict`s corresponding to each tag detected
+        '''
+
+        # convert frame to grayscale
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         return self.detector.detect(gray)
 
-    def save_detections(self):
+    def save_detections(self, detections):
+        '''
+        ## Description
+        ---
+        Saves detection data to TrackingObject data class objects
+
+        ## Arguments
+        ---
+
+        | Argument       | Type             | Description                    | Default Value  |
+        | :------        | :--              | :---------                     | :-----------   |
+        | detections     | `list` of `dict` | List of detection dictionaries | N/A            |
+        |<img width=250/>|<img width=350/>|<img width=1400/>|<img width=250/>|
+
+        ## Returns
+        ---
+        void
+        '''
+
         # x and y offset of crop region
         offset = self.roi_dims[0:2]
         t= time.time()-self.t0
-        ids_detected = [x['id']for x in self.detections]
+        ids_detected = [x['id']for x in detections]
         for obj in self.tracking_objects:
             if obj.id not in ids_detected:
-                obj.add_timestep(t, offset = offset)
+                obj.add_timestep(t, det = None, offset = offset)
             else:
-                obj.add_timestep(t, det = self.detections[ids_detected.index(obj.id)], offset = offset)
+                obj.add_timestep(t, det = detections[ids_detected.index(obj.id)], offset = offset)
                 if self.show_video is True:
+                    # draw line showing orientation of tag
                     cv2.line(self.frame, (int(obj.x[0]),int(obj.frame_height-obj.x[1])),\
                     (int(obj.x[0]+25*np.cos(-obj.x[2])), int(obj.frame_height-obj.x[1]+25*np.sin(-obj.x[2]))),\
                     (0,255,0),5)
 
 
     def step(self):
+        '''
+        ## Description
+        ---
+        Captures frame, detects tags, and saves detection data to TrackingObjects data class object
+
+        ## Arguments
+        ---
+
+        None
+
+        ## Returns
+        ---
+        void
+        '''
         [self.frame, self.roi] = self.capture_frame()
         if self.save_video is True:
             self.out.write(self.frame)
 
         self.detections = self.detect_frame(self.roi)
-        self.save_detections()
+        self.save_detections(self.detections)
 
         if self.show_video is True:
             cv2.imshow('frame', self.frame)
 
-    def close(self):
+    def close_camera(self):
+        '''
+        ## Description
+        ---
+        Closes camera object along with all camera windows open
+
+        ## Arguments
+        ---
+        None
+
+        ## Returns
+        ---
+        void
+        '''
         self.cap.release()
         if self.out is not None:
             self.out.release()
         cv2.destroyAllWindows()
 
-    def save_data(self,path, Ar, Rr, local_copy=False):
+    def save_data(self, path, local_copy=False):
         '''
+        ## Description
+        ---
         Saves data to given file path as .csv file in following format
-        (time index, len([s,a,r,s']))
+        (timestamp, state_tag_1, state_tag2,...state_tag_n)
+
+        ## Arguments
+        ---
+
+        | Argument   | Type     | Description                               | Default Value  |
+        | :------    | :--      | :---------                                | :-----------   |
+        | path       | `string` | Path to save data                         | N/A            |
+        | local_copy | `bool`   | (Optional) Returns data locally if `True` | `False`        |
+        |<img width=250/>|<img width=350/>|<img width=1400/>|<img width=250/>|
+
+        ## Returns
+        ---
+        void
         '''
+        '''
+        t = np.array(self.tracking_objects[0].t_history)
         data = np.hstack([np.array(obj.history) for obj in self.tracking_objects])
         S = data[:-1]
-        A = np.array(Ar)
-        R = np.array(Rr).reshape(len(Rr),1)
-        S_prime = data[1:]
-        data_out = np.hstack([S,A,R,S_prime])
+        data_out = np.hstack([t,S])
         np.savetxt(path,data_out,delimiter=',')
 
         if local_copy:
-            return S,A,R,S_prime
+            return t,S

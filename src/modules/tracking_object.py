@@ -42,9 +42,6 @@ class TrackingObject(object):
         | history_length   | `int`   | Optional max history length to record | `None`         |
         |<img width=350/>|<img width=250/>|<img width=800/>|<img width=500/>|
 
-        ## Returns
-        ---
-        void
         '''
 
         # attributes to be accessed by user (Public)

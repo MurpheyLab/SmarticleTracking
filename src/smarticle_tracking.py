@@ -8,7 +8,7 @@ import numpy.matlib
 from collections import deque
 import cv2
 from copy import deepcopy
-# from apriltag import *
+from apriltag import *
 import time
 
 
@@ -67,7 +67,7 @@ class TrackingObject(object):
         self._missed_frames = 0
         self._object_detected = False
 
-    def _get_state(det, offset=None):
+    def _get_state(self, det, offset):
         '''
         ## Description
         ---
@@ -76,10 +76,10 @@ class TrackingObject(object):
         ## Arguments
         ---
 
-        | Argument| Type           | Description                                                                 | Default Value  |
-        | :------ | :--            | :---------                                                                  | :-----------   |
-        | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
-        | offset  | `list` of `int`| Two element list that specifies offset from detection frame to global frame | `None`         |
+        | Argument| Type       | Description                                                                 | Default Value  |
+        | :------ | :--        | :---------                                                                  | :-----------   |
+        | det     | `dict`     | Detection of tag from AprilTag library                                      | N/A            |
+        | offset  | `np.array` | Two element list that specifies offset from detection frame to global frame | N/A            |
         |<img width=300/>|<img width=300/>|<img width=900/>|<img width=250/>|
 
         ## Returns
@@ -149,6 +149,8 @@ class TrackingObject(object):
         ---
         void
         '''
+        if offset is None:
+            offset = np.zeros(2)
         self.x = self._get_state(det,offset)
         self.t = t
         # add initial pose and time to history
@@ -182,7 +184,7 @@ class TrackingObject(object):
         self.t = t
         # if offset is not provided, set offset to [0, 00] (no offset)
         if offset is None:
-            offset = np.array([0,0])
+            offset = np.zeros(2)
 
         # if object is not detected in this time frame carry over last beleif of
         # object state and increment the missed frames counter
@@ -254,18 +256,18 @@ class Tracking(object):
         self.tag_ids = deepcopy(tag_ids)
         self.tag_ids.sort()
 
-        self.init_camera(video_source)
+        self._init_camera(video_source)
 
         # region of interest parameters: should be 4 element list of the form: [x, y, w, h]
-        if roi_dims is not N/A:
+        if roi_dims is not None:
             assert len(roi_dims) is 4, 'roi_dims is 4 element list of form: [x, y, w, h]'
             self.roi_dims = roi_dims
         # if roi_dims is not specified
         else:
-            # set roi_dims so that N/A of the image is cropped
+            # set roi_dims so that None of the image is cropped
             self.roi_dims = [0,0, self.frame_width, self.frame_height]
 
-        self.init_tracking()
+        self._init_tracking()
 
 
     def _init_camera(self, video_source):
@@ -281,11 +283,11 @@ class Tracking(object):
         self.cap.set(28,0) # set manual focus
         self.cap.set(cv2.CAP_PROP_BRIGHTNESS,30) # low brightness
         self.cap.set(cv2.CAP_PROP_CONTRAST,100) # high contrast
-        if self.save_video is not N/A:
+        if self.save_video is not None:
             # Save video to file
             self.out = cv2.VideoWriter(save_video,cv2.VideoWriter_fourcc(*'MJPG'), self.fps, (self.frame_width,self.frame_height))
         else:
-            self.out = N/A
+            self.out = None
 
     def _init_tracking(self):
         '''Initializes April tag detector and creates tracking objects.
@@ -300,22 +302,23 @@ class Tracking(object):
         self.t0 = time.time()
 
         for obj in self.tracking_objects:
-            det = N/A
+            det = None
             t_start = time.time()
-            while det is N/A:
+            while det is None:
                 # capture frame and region of interest, specified by crop region
                 [self.frame,self.roi] = self.capture_frame()
                 # detect april tags in frame
                 detections = self.detect_frame(self.roi)
                 ids_detected = [x['id'] for x in detections]
                 if obj.id not in ids_detected:
-                    det = N/A
+                    det = None
+                else:
+                    det = detections[ids_detected.index(obj.id)]
                 if (time.time()-t_start)>5:
-                    print('Smarticle {}  could not be found in frame'.format(obj.id))
+                    print('Tag {}  could not be found in frame'.format(obj.id))
                     break
 
-            det = detections[ids_detected.index(obj.id)]
-            obj.init_detection(det)
+            obj.init_detection(0,det)
             print('Tag {} detected in frame'.format(obj.id))
 
     def capture_frame(self):
@@ -326,7 +329,7 @@ class Tracking(object):
 
         ## Arguments
         ---
-        N/A
+        None
 
         ## Returns
         ---
@@ -389,14 +392,14 @@ class Tracking(object):
         ids_detected = [x['id']for x in detections]
         for obj in self.tracking_objects:
             if obj.id not in ids_detected:
-                obj.add_timestep(t, det = N/A, offset = offset)
+                obj.add_timestep(t, det = None, offset = offset)
             else:
                 obj.add_timestep(t, det = detections[ids_detected.index(obj.id)], offset = offset)
                 if self.show_video is True:
                     # draw line showing orientation of tag
-                    cv2.line(self.frame, (int(obj.x[0]),int(obj.frame_height-obj.x[1])),\
-                    (int(obj.x[0]+25*np.cos(-obj.x[2])), int(obj.frame_height-obj.x[1]+25*np.sin(-obj.x[2]))),\
-                    (0,255,0),5)
+                    cv2.line(self.frame, (int(obj.x[0]),int(self.frame_height-obj.x[1])),\
+                    (int(obj.x[0]+25*np.cos(-obj.x[2])), int(self.frame_height-obj.x[1]+25*np.sin(-obj.x[2]))),\
+                    (0,255,0),2)
 
 
     def step(self):
@@ -408,7 +411,7 @@ class Tracking(object):
         ## Arguments
         ---
 
-        N/A
+        None
 
         ## Returns
         ---
@@ -432,7 +435,7 @@ class Tracking(object):
 
         ## Arguments
         ---
-        N/A
+        None
 
         ## Returns
         ---
@@ -453,9 +456,9 @@ class Tracking(object):
         ## Arguments
         ---
 
-        | Argument   | Type     | Description                               | Default Value  |
-        | :------    | :--      | :---------                                | :-----------   |
-        | path       | `string` | Path to save data                         | N/A            |
+        | Argument   | Type     | Description                                | Default Value  |
+        | :------    | :--      | :---------                                 | :-----------   |
+        | path       | `string` | Path to save data                          | N/A            |
         | local_copy | `bool`   | *Optional:* Returns data locally if `True` | `False`        |
         |<img width=300/>|<img width=300/>|<img width=900/>|<img width=250/>|
 

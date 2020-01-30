@@ -83,10 +83,10 @@ class Tag(object):
         # x and y position of center of tag
         center = det['center']
         # flip y axis from camera to put origin in bottom left corner
-        center[1]=self.frame_height-center[1]
+        center[1]=self._frame_height-center[1]
         # point at center top of tag is average of top right and top left corners
         center_top = (det['lb-rb-rt-lt'][2]+det['lb-rb-rt-lt'][3])/2.
-        center_top[1]=self.frame_height-center_top[1]
+        center_top[1]=self._frame_height-center_top[1]
         # calculate theta as angle between center and cetner top and angle wrap so it is between 0 and 2pi
         theta = np.mod(np.arctan2(center_top[1]-center[1],center_top[0]-center[0]),2*np.pi)
         # record angle so that there are no discontinuities (prevent wrapping between 0 and 2*pi)
@@ -110,24 +110,24 @@ class Tag(object):
         void
         '''
         # time of last sucessful detection before this most recent one
-        t0 = self.t_history[-(1+self.missed_frames)]
+        t0 = self.t_history[-(1+self._missed_frames)]
         # calculate slope between points
-        m = (self.x-self.history[-(1+self.missed_frames)])/(self.t-t0)
+        m = (self.x-self.history[-(1+self._missed_frames)])/(self.t-t0)
         # iterate through all of the missed frames
-        while self.missed_frames > 0:
+        while self._missed_frames > 0:
             # calculate dt between missed frame and t0
-            dt = self.t_history[-(self.missed_frames)] - t0
+            dt = self.t_history[-(self._missed_frames)] - t0
             # apply linear smoothing
-            self.history[-(self.missed_frames)] += m*dt
+            self.history[-(self._missed_frames)] += m*dt
             # move to next missed frame
-            self.missed_frames-=1
+            self._missed_frames-=1
 
 
     def init_detection(self, t, det, offset = None):
         '''
         ## Description
         ---
-        Initializes detections of tags with initial state and time of tag
+        Initializes detections of tags with initial state and time of tag at first detection
 
         ## Arguments
         ---
@@ -171,7 +171,7 @@ class Tag(object):
         ---
         void
         '''
-        assert self.object_detected is True, "Object not initially detected"
+        assert self._object_detected is True, "Object not initially detected"
 
         self.t = t
         # if offset is not provided, set offset to [0, 00] (no offset)
@@ -181,11 +181,11 @@ class Tag(object):
         # if object is not detected in this time frame carry over last beleif of
         # object state and increment the missed frames counter
         if det is None:
-            self.missed_frames +=1
+            self._missed_frames +=1
         else:
             self.x = self._get_state(det,offset)
             # linearly smooth missed frames
-            if self.missed_frames > 0:
+            if self._missed_frames > 0:
                 self._smooth_missed_frames()
             # add most recent time step to history
         self.history.append(self.x)

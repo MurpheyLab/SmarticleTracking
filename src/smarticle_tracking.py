@@ -205,7 +205,17 @@ class TrackingObject(object):
 
 class Tracking(object):
     '''
+    ## Description
+    ---
     Class for tracking multiple AprilTag objects and managing use of webcam with OpenCV
+
+    **Public Attributes (for the user):**
+
+    * TODO
+
+    **Private Attributes (for the class):**
+
+    * TODO
     '''
 
 
@@ -213,24 +223,21 @@ class Tracking(object):
      video_source=0, save_video=None, show_video=False,\
      history_len=None, roi_dims=None):
         '''
-        ## Description
-        ---
-        Initializes detections of tags with initial state and time of tag at first detection
 
         ## Arguments
         ---
 
-        | Argument     | Type            | Description                                                                            | Default Value  |
-        | :------      | :--             | :---------                                                                             | :-----------   |
-        | tag_ids      | `list` of `int` | List of tag IDs to track                                                               | N/A            |
-        | frame_width  | `int`           | Frame width of camera capture                                                          | N/A            |
-        | frame_height | `int`           | Frame height of camera capture                                                         | N/A            |
-        | fps          | `int`           | Frames per second of camera capture                                                    | N/A            |
+        | Argument     | Type            | Description                                                                             | Default Value  |
+        | :------      | :--             | :---------                                                                              | :-----------   |
+        | tag_ids      | `list` of `int` | List of tag IDs to track                                                                | N/A            |
+        | frame_width  | `int`           | Frame width of camera capture                                                           | N/A            |
+        | frame_height | `int`           | Frame height of camera capture                                                          | N/A            |
+        | fps          | `int`           | Frames per second of camera capture                                                     | N/A            |
         | video_source | `string`        | *Optional:* Path of input video file                                                    | 0              |
-        | save_video   | `string`        | *Optional:* Save video to specified path                                                | `N/A`         |
+        | save_video   | `string`        | *Optional:* Save video to specified path                                                | `None`         |
         | show_video   | `bool`          | *Optional:* Show video to screen if `True`                                              | `False`        |
-        | history_len  | `int`           | *Optional:* Max length of tracking history to be saved                                  | `N/A`         |
-        | roi_dims     | `list` of `int` | *Optional:* Two element list that specifies offset from detection frame to global frame | `N/A`         |
+        | history_len  | `int`           | *Optional:* Max length of tracking history to be saved                                  | `None`         |
+        | roi_dims     | `list` of `int` | *Optional:* Two element list that specifies offset from detection frame to global frame | `None`         |
         |<img width=300/>|<img width=300/>|<img width=900/>|<img width=250/>|
 
         '''

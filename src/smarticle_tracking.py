@@ -49,7 +49,7 @@ class TrackingObject(object):
         | ID               | `int`   | ID of corresponding April Tag         | N/A            |
         | frame_height     | `int`   | Pixel height of frame                 | N/A            |
         | history_length   | `int`   | Optional max history length to record | `None`         |
-        |<img width=350/>|<img width=250/>|<img width=800/>|<img width=500/>|
+        |<img width=300/>|<img width=300/>|<img width=900/>|<img width=250/>|
 
         '''
 
@@ -80,7 +80,7 @@ class TrackingObject(object):
         | :------ | :--            | :---------                                                                  | :-----------   |
         | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
         | offset  | `list` of `int`| Two element list that specifies offset from detection frame to global frame | `None`         |
-        |<img width=250/>|<img width=350/>|<img width=1400/>|<img width=250/>|
+        |<img width=300/>|<img width=300/>|<img width=900/>|<img width=250/>|
 
         ## Returns
         ---
@@ -143,7 +143,7 @@ class TrackingObject(object):
         | t       | `int`          | Time of detection                                                           | N/A            |
         | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
         | offset  | `list` of `int`| Two element list that specifies offset from detection frame to global frame | `None`         |
-        |<img width=250/>|<img width=350/>|<img width=1400/>|<img width=250/>|
+        |<img width=300/>|<img width=300/>|<img width=900/>|<img width=250/>|
 
         ## Returns
         ---
@@ -171,7 +171,7 @@ class TrackingObject(object):
         | t       | `int`          | Time of detection                                                           | N/A            |
         | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
         | offset  | `list` of `int`| Two element list that specifies offset from global frame to detection frame | `None`         |
-        |<img width=250/>|<img width=350/>|<img width=1400/>|<img width=250/>|
+        |<img width=300/>|<img width=300/>|<img width=900/>|<img width=250/>|
 
         ## Returns
         ---
@@ -226,12 +226,12 @@ class Tracking(object):
         | frame_width  | `int`           | Frame width of camera capture                                                          | N/A            |
         | frame_height | `int`           | Frame height of camera capture                                                         | N/A            |
         | fps          | `int`           | Frames per second of camera capture                                                    | N/A            |
-        | video_source | `string`        | (Optional) Path of input video file                                                    | 0              |
-        | save_video   | `string`        | (Optional) Save video to specified path                                                | `None`         |
-        | show_video   | `bool`          | (Optional) Show video to screen if `True`                                              | `False`        |
-        | history_len  | `int`           | (Optional) Max length of tracking history to be saved                                  | `None`         |
-        | roi_dims     | `list` of `int` | (Optional) Two element list that specifies offset from detection frame to global frame | `None`         |
-        |<img width=250/>|<img width=350/>|<img width=1400/>|<img width=250/>|
+        | video_source | `string`        | *Optional:* Path of input video file                                                    | 0              |
+        | save_video   | `string`        | *Optional:* Save video to specified path                                                | `N/A`         |
+        | show_video   | `bool`          | *Optional:* Show video to screen if `True`                                              | `False`        |
+        | history_len  | `int`           | *Optional:* Max length of tracking history to be saved                                  | `N/A`         |
+        | roi_dims     | `list` of `int` | *Optional:* Two element list that specifies offset from detection frame to global frame | `N/A`         |
+        |<img width=300/>|<img width=300/>|<img width=900/>|<img width=250/>|
 
         '''
 
@@ -250,12 +250,12 @@ class Tracking(object):
         self.init_camera(video_source)
 
         # region of interest parameters: should be 4 element list of the form: [x, y, w, h]
-        if roi_dims is not None:
+        if roi_dims is not N/A:
             assert len(roi_dims) is 4, 'roi_dims is 4 element list of form: [x, y, w, h]'
             self.roi_dims = roi_dims
         # if roi_dims is not specified
         else:
-            # set roi_dims so that none of the image is cropped
+            # set roi_dims so that N/A of the image is cropped
             self.roi_dims = [0,0, self.frame_width, self.frame_height]
 
         self.init_tracking()
@@ -274,11 +274,11 @@ class Tracking(object):
         self.cap.set(28,0) # set manual focus
         self.cap.set(cv2.CAP_PROP_BRIGHTNESS,30) # low brightness
         self.cap.set(cv2.CAP_PROP_CONTRAST,100) # high contrast
-        if self.save_video is not None:
+        if self.save_video is not N/A:
             # Save video to file
             self.out = cv2.VideoWriter(save_video,cv2.VideoWriter_fourcc(*'MJPG'), self.fps, (self.frame_width,self.frame_height))
         else:
-            self.out = None
+            self.out = N/A
 
     def _init_tracking(self):
         '''Initializes April tag detector and creates tracking objects.
@@ -293,16 +293,16 @@ class Tracking(object):
         self.t0 = time.time()
 
         for obj in self.tracking_objects:
-            det = None
+            det = N/A
             t_start = time.time()
-            while det is None:
+            while det is N/A:
                 # capture frame and region of interest, specified by crop region
                 [self.frame,self.roi] = self.capture_frame()
                 # detect april tags in frame
                 detections = self.detect_frame(self.roi)
                 ids_detected = [x['id'] for x in detections]
                 if obj.id not in ids_detected:
-                    det = None
+                    det = N/A
                 if (time.time()-t_start)>5:
                     print('Smarticle {}  could not be found in frame'.format(obj.id))
                     break
@@ -346,7 +346,7 @@ class Tracking(object):
         | Argument| Type         | Description              | Default Value  |
         | :------ | :--          | :---------               | :-----------   |
         | frame     | `np.array` | Frame to detect tags in  | N/A            |
-        |<img width=250/>|<img width=350/>|<img width=1400/>|<img width=250/>|
+        |<img width=300/>|<img width=300/>|<img width=900/>|<img width=250/>|
 
         ## Returns
         ---
@@ -369,7 +369,7 @@ class Tracking(object):
         | Argument       | Type             | Description                    | Default Value  |
         | :------        | :--              | :---------                     | :-----------   |
         | detections     | `list` of `dict` | List of detection dictionaries | N/A            |
-        |<img width=250/>|<img width=350/>|<img width=1400/>|<img width=250/>|
+        |<img width=300/>|<img width=300/>|<img width=900/>|<img width=250/>|
 
         ## Returns
         ---
@@ -382,7 +382,7 @@ class Tracking(object):
         ids_detected = [x['id']for x in detections]
         for obj in self.tracking_objects:
             if obj.id not in ids_detected:
-                obj.add_timestep(t, det = None, offset = offset)
+                obj.add_timestep(t, det = N/A, offset = offset)
             else:
                 obj.add_timestep(t, det = detections[ids_detected.index(obj.id)], offset = offset)
                 if self.show_video is True:
@@ -401,7 +401,7 @@ class Tracking(object):
         ## Arguments
         ---
 
-        None
+        N/A
 
         ## Returns
         ---
@@ -425,7 +425,7 @@ class Tracking(object):
 
         ## Arguments
         ---
-        None
+        N/A
 
         ## Returns
         ---
@@ -449,14 +449,14 @@ class Tracking(object):
         | Argument   | Type     | Description                               | Default Value  |
         | :------    | :--      | :---------                                | :-----------   |
         | path       | `string` | Path to save data                         | N/A            |
-        | local_copy | `bool`   | (Optional) Returns data locally if `True` | `False`        |
-        |<img width=250/>|<img width=350/>|<img width=1400/>|<img width=250/>|
+        | local_copy | `bool`   | *Optional:* Returns data locally if `True` | `False`        |
+        |<img width=300/>|<img width=300/>|<img width=900/>|<img width=250/>|
 
         ## Returns
         ---
         void
         '''
-        
+
         t = np.array(self.tracking_objects[0].t_history)
         data = np.hstack([np.array(obj.history) for obj in self.tracking_objects])
         S = data[:-1]

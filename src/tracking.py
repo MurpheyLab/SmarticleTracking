@@ -289,10 +289,13 @@ class Tracking(object):
         '''
 
         t = np.array(self.tracking_objects[0].t_history)
+        header = 'time (s), '
         data = np.hstack([np.array(obj.history) for obj in self.tracking_objects])
+        for obj in self.tracking_objects:
+            header+= 'x{0}, y{0}, theta{0},'.format(obj.id)
         S = data[:-1]
         data_out = np.hstack([t,S])
-        np.savetxt(path,data_out,delimiter=',')
+        np.savetxt(path,data_out, delimiter=',', header=header)
 
         if local_copy:
             return t,S

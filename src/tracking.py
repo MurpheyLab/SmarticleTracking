@@ -206,7 +206,7 @@ class Tracking(object):
                 obj.add_timestep(t, det = None, offset = offset)
             else:
                 obj.add_timestep(t, det = detections[ids_detected.index(obj.id)], offset = offset)
-                if self.show_video is True:
+                if self.show_video is True and obj.id<100:
                     # draw line showing orientation of tag
                     cv2.line(self.frame, (int(obj.x[0]),int(self.frame_height-obj.x[1])),\
                     (int(obj.x[0]+25*np.cos(-obj.x[2])), int(self.frame_height-obj.x[1]+25*np.sin(-obj.x[2]))),\

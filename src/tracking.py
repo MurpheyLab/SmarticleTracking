@@ -8,6 +8,7 @@ import cv2
 from copy import deepcopy
 from apriltag import *
 import time
+from tracking_object import TrackingObject
 
 
 ################################################################################
@@ -31,7 +32,7 @@ class Tracking(object):
 
 
     def __init__(self, tag_ids, frame_width, frame_height, fps,\
-     video_source=0, save_video=None, show_video=False,\
+     video_source=0, save_video=None, show_video=False, show_lines=False,\
      history_len=None, roi_dims=None):
         '''
 
@@ -56,6 +57,7 @@ class Tracking(object):
         # save as attributes
         self.save_video = save_video
         self.show_video = show_video
+        self.show_lines = show_lines
         self.history_len = history_len
         self.frame_width = frame_width
         self.frame_height = frame_height
@@ -129,8 +131,8 @@ class Tracking(object):
 
             obj.init_detection(0,det)
             print('Tag {} detected in frame'.format(obj.id))
-            self.scale_factor = self.get_scale_factor()
-            print('Scale factor of {} pixels/mm'.format(self.scale_factor))
+        self.scale_factor = self.get_scale_factor()
+        print('Scale factor of {} pixels/mm'.format(self.scale_factor))
 
     def capture_frame(self):
         '''
@@ -206,7 +208,7 @@ class Tracking(object):
                 obj.add_timestep(t, det = None, offset = offset)
             else:
                 obj.add_timestep(t, det = detections[ids_detected.index(obj.id)], offset = offset)
-                if self.show_video is True and obj.id<100:
+                if self.show_lines is True and obj.id<100:
                     # draw line showing orientation of tag
                     cv2.line(self.frame, (int(obj.x[0]),int(self.frame_height-obj.x[1])),\
                     (int(obj.x[0]+25*np.cos(-obj.x[2])), int(self.frame_height-obj.x[1]+25*np.sin(-obj.x[2]))),\
@@ -215,9 +217,10 @@ class Tracking(object):
 
     def get_scale_factor(self):
         '''
-        Get scale factor (pixels/mm) of camera setup
+        Get scale factor (mm/pixels) of camera setup
         '''
         scale_factors = [obj.scale_factor for obj in self.tracking_objects if obj.tag_length is not None]
+        # scale_factors = [obj.scale_factor for obj in objects_w_tag_length]
         return sum(scale_factors)/len(scale_factors)
 
     def step(self):

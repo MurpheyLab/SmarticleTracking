@@ -96,7 +96,7 @@ class Tracking(object):
         self.cap.set(cv2.CAP_PROP_CONTRAST,100) # high contrast
         if self.save_video is not None:
             # Save video to file
-            self.out = cv2.VideoWriter(save_video,cv2.VideoWriter_fourcc(*'MJPG'), self.fps, (self.frame_width,self.frame_height))
+            self.out = cv2.VideoWriter(self.save_video,cv2.VideoWriter_fourcc(*'MJPG'), self.fps, (self.frame_width,self.frame_height))
         else:
             self.out = None
 

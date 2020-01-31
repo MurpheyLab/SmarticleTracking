@@ -126,8 +126,7 @@ class Tracking(object):
                 else:
                     det = detections[ids_detected.index(obj.id)]
                 if (time.time()-t_start)>5:
-                    print('Tag {}  could not be found in frame'.format(obj.id))
-                    break
+                    raise Exception('Tag {}  could not be found in frame'.format(obj.id))
 
             obj.init_detection(0,det)
             print('Tag {} detected in frame'.format(obj.id))

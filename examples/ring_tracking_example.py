@@ -10,7 +10,8 @@ from tracking_object import TrackingObject
 import time
 
 # set to true to print tracking rate (Hz) to screen
-show_timer = False
+show_timer = True
+fps = 20
 
 # IDs of smarticles to be tracked--these correspond to IDs of AprilTags
 smart_ids = [1,12]
@@ -35,7 +36,7 @@ from_camera=0
 from_video='camera_test2.avi'
 
 track = Tracking(tag_ids, video_source=from_camera, frame_width=1280,\
- frame_height=720, fps=24, save_video=None, show_lines=False, show_video=True)
+ frame_height=720, fps=fps, save_video=None, show_lines=False, show_video=True)
 t0 = time.time()
 counter = 0
 while(True):

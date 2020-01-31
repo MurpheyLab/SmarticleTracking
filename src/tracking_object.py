@@ -56,7 +56,7 @@ class TrackingObject(object):
         # if object is a smarticle (ID <100), it has a known tag
         # size which can be used for scaling
         if self.id <100:
-            self.tag_length = SMARTICLE_TAG_LENGTH_MM
+            self.tag_length = self.SMARTICLE_TAG_LENGTH_MM
         else:
             self.tag_length = None
         self.x = np.zeros(3)
@@ -105,7 +105,7 @@ class TrackingObject(object):
         new_theta = self.x[2]+dtheta
         return np.append(center+offset,new_theta)
 
-    def _get_scale_factor(det):
+    def _get_scale_factor(self,det):
         '''
         DOC
         '''
@@ -113,12 +113,12 @@ class TrackingObject(object):
         bottom_right = det['lb-rb-rt-lt'][1]
         top_right = det['lb-rb-rt-lt'][2]
         top_left = det['lb-rb-rt-lt'][3]
-        diag_pixel = 0.5*(np.abs(bottom_left-top_right)+np.abs(bottom_right-top_left))
+        diag_pixel = 0.5*(np.linalg.norm(bottom_left-top_right)+np.linalg.norm(bottom_right-top_left))
         diag_len = np.sqrt(2)*self.tag_length
-        # scale factor pixels/unit lenght
-        return diag_pixel/diag_len
+        # scale factor unit_mm/pixel
+        return diag_len/diag_pixel
 
-    def _smooth_missed_frames():
+    def _smooth_missed_frames(self):
         '''
         ## Description
         ---

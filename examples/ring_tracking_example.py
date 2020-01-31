@@ -8,7 +8,6 @@ from apriltag import apriltag
 from tracking import Tracking
 from tracking_object import TrackingObject
 import time
-from pdb import set_trace as bp
 
 # set to true to print tracking rate (Hz) to screen
 show_timer = False

@@ -34,9 +34,7 @@ class TrackingObject(object):
     * **_object_detected**: flag for indicating whether tag has been initially detected
     '''
 
-    SMARTICLE_TAG_LENGTH_MM = 21.34
-
-    def __init__(self, ID, frame_height, history_length=None, tag_length=None):
+    def __init__(self, ID, history_length=None, tag_length=None):
         '''
         ## Arguments
         ---

@@ -37,7 +37,7 @@ class TrackingObject(object):
 
     SMARTICLE_TAG_LENGTH_MM = 21.34
 
-    def __init__(self, ID, frame_height, history_length=None):
+    def __init__(self, ID, frame_height, history_length=None, tag_length=None):
         '''
         ## Arguments
         ---
@@ -55,16 +55,14 @@ class TrackingObject(object):
         self.id = ID
         # if object is a smarticle (ID <100), it has a known tag
         # size which can be used for scaling
-        if self.id <100:
-            self.tag_length = self.SMARTICLE_TAG_LENGTH_MM
-        else:
-            self.tag_length = None
+        self.tag_length = tag_length
         self.x = np.zeros(3)
         self.t = 0
         # use a deque data structure for history
         # set a max length of 150 elements or about 10s of data
         self.history = deque(maxlen=history_length)
         self.t_history = deque(maxlen=history_length)
+        self.scale_factor = None
 
         # attributes to be used within class (Private)
         self._frame_height = frame_height;
@@ -109,6 +107,7 @@ class TrackingObject(object):
         '''
         DOC
         '''
+        assert self.tag_length is not None, 'Tag length must be specified to get scale factor'
         bottom_left = det['lb-rb-rt-lt'][0]
         bottom_right = det['lb-rb-rt-lt'][1]
         top_right = det['lb-rb-rt-lt'][2]

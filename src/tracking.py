@@ -107,7 +107,7 @@ class Tracking(object):
         self.detector = apriltag("tagStandard41h12")
 
         # initialize tracking objects
-        self.tracking_objects = [TrackingObject(tag_id, self.frame_height, history_length=self.history_len) for tag_id in self.tag_ids]
+        self.tracking_objects = [TrackingObject(tag_id, history_length=self.history_len) for tag_id in self.tag_ids]
 
         # set t0 for tracking data
         self.t0 = time.time()
@@ -209,8 +209,8 @@ class Tracking(object):
                 obj.add_timestep(t, det = detections[ids_detected.index(obj.id)], offset = offset)
                 if self.show_lines is True and obj.id<100:
                     # draw line showing orientation of tag
-                    cv2.line(self.frame, (int(obj.x[0]),int(self.frame_height-obj.x[1])),\
-                    (int(obj.x[0]+25*np.cos(-obj.x[2])), int(self.frame_height-obj.x[1]+25*np.sin(-obj.x[2]))),\
+                    cv2.line(self.frame, (int(obj.x[0]),int(obj.x[1])),\
+                    (int(obj.x[0]+25*np.cos(obj.x[2])), int(obj.x[1]+25*np.sin(obj.x[2]))),\
                     (0,255,0),2)
 
 

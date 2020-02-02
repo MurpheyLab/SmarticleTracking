@@ -30,7 +30,6 @@ class TrackingObject(object):
 
     **Private Attributes (for the class):**
 
-    * **_frame_height**: used to flip y axis so that origin is in bottom left corner of frames
     * **_missed frames**: used for keeping track of missed frames that require linear interpolation
     * **_object_detected**: flag for indicating whether tag has been initially detected
     '''
@@ -45,7 +44,6 @@ class TrackingObject(object):
         | Argument         | Type    | Description                           | Default Value  |
         | :------          | :--     | :---------                            | :-----------   |
         | ID               | `int`   | ID of corresponding April Tag         | N/A            |
-        | frame_height     | `int`   | Pixel height of frame                 | N/A            |
         | history_length   | `int`   | Optional max history length to record | `None`         |
         |<img width=300/>|<img width=300/>|<img width=900/>|<img width=250/>|
 
@@ -67,7 +65,6 @@ class TrackingObject(object):
         self.t_history = deque(maxlen=history_length)
 
         # attributes to be used within class (Private)
-        self._frame_height = frame_height;
         self._missed_frames = 0
         self._object_detected = False
 
@@ -93,10 +90,10 @@ class TrackingObject(object):
         # x and y position of center of tag
         center = det['center']
         # flip y axis from camera to put origin in bottom left corner
-        center[1]=self._frame_height-center[1]
+        center[1]=center[1]
         # point at center top of tag is average of top right and top left corners
         center_top = (det['lb-rb-rt-lt'][2]+det['lb-rb-rt-lt'][3])/2.
-        center_top[1]=self._frame_height-center_top[1]
+        center_top[1]=center_top[1]
         # calculate theta as angle between center and cetner top and angle wrap so it is between 0 and 2pi
         theta = np.mod(np.arctan2(center_top[1]-center[1],center_top[0]-center[0]),2*np.pi)
         # record angle so that there are no discontinuities (prevent wrapping between 0 and 2*pi)
@@ -115,8 +112,8 @@ class TrackingObject(object):
         top_left = det['lb-rb-rt-lt'][3]
         diag_pixel = 0.5*(np.linalg.norm(bottom_left-top_right)+np.linalg.norm(bottom_right-top_left))
         diag_len = np.sqrt(2)*self.tag_length
-        # scale factor unit_mm/pixel
-        return diag_len/diag_pixel
+        # scale factor pixel/unit mm
+        return diag_pixel/diag_len
 
     def _smooth_missed_frames(self):
         '''

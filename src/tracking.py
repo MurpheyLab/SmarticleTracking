@@ -31,9 +31,7 @@ class Tracking(object):
     '''
 
 
-    def __init__(self, tag_ids, frame_width, frame_height, fps,\
-     video_source=0, save_video=None, show_video=False, show_lines=False,\
-     history_len=None, roi_dims=None):
+    def __init__(self, tag_ids, history_len=None, length_dict=None):
         '''
 
         ## Arguments
@@ -54,60 +52,38 @@ class Tracking(object):
 
         '''
 
-        # save as attributes
-        self.save_video = save_video
-        self.show_video = show_video
-        self.show_lines = show_lines
+        # save as attribute
         self.history_len = history_len
-        self.frame_width = frame_width
-        self.frame_height = frame_height
-        self.fps = fps
 
         # Make sure tag_ids are in ascending order
         self.tag_ids = deepcopy(tag_ids)
         self.tag_ids.sort()
+        self.line_length = 25
 
-        self._init_camera(video_source)
-
-        # region of interest parameters: should be 4 element list of the form: [x, y, w, h]
-        if roi_dims is not None:
-            assert len(roi_dims) is 4, 'roi_dims is 4 element list of form: [x, y, w, h]'
-            self.roi_dims = roi_dims
-        # if roi_dims is not specified
+        if length_dict is None:
+            values = [None]*len(self.tag_ids)
+            self.length_dict = dict(zip(self.tag_ids,values))
         else:
-            # set roi_dims so that None of the image is cropped
-            self.roi_dims = [0,0, self.frame_width, self.frame_height]
+            assert len(length_dict) == len(self.tag_ids),\
+             "length_dict should be a dictionary of same length of tag_ids"
+            self.length_dict = length_dict
 
-        self._init_tracking()
-
-
-    def _init_camera(self, video_source):
-        '''Initializes camera with specified settings as tuned tracking settings
-        (ie. turns off autofocus, sets brightness and contrast)'''
-        # Camera Settings
-        self.cap = cv2.VideoCapture(video_source) # sets input source for video capture
-        self.cap.set(6, cv2.VideoWriter_fourcc(*'MJPG')) # setting MJPG codec
-        self.cap.set(3, self.frame_width) # Width
-        self.cap.set(4, self.frame_height) # Height
-        self.cap.set(5,self.fps) # fps
-        self.cap.set(cv2.CAP_PROP_AUTOFOCUS, 0) # disable autofocus
-        self.cap.set(28,0) # set manual focus
-        self.cap.set(cv2.CAP_PROP_BRIGHTNESS,30) # low brightness
-        self.cap.set(cv2.CAP_PROP_CONTRAST,100) # high contrast
-        if self.save_video is not None:
-            # Save video to file
-            self.out = cv2.VideoWriter(self.save_video,cv2.VideoWriter_fourcc(*'MJPG'), self.fps, (self.frame_width,self.frame_height))
-        else:
-            self.out = None
-
-    def _init_tracking(self):
-        '''Initializes April tag detector and creates tracking objects.
-        Additionally gets initial position of objects and sets time for t0'''
         # April Tag Detector Object, specify tag family
         self.detector = apriltag("tagStandard41h12")
 
         # initialize tracking objects
-        self.tracking_objects = [TrackingObject(tag_id, history_length=self.history_len) for tag_id in self.tag_ids]
+        self.tracking_objects = [TrackingObject(tag_id, history_length=self.history_len,\
+            tag_length=self.length_dict[tag_id]) for tag_id in self.tag_ids]
+
+    @classmethod
+    def q_pressed(self):
+        return cv2.waitKey(1) & 0xFF == ord('q')
+
+
+
+    def start(self,cam):
+        '''Initializes April tag detector and creates tracking objects.
+        Additionally gets initial position of objects and sets time for t0'''
 
         # set t0 for tracking data
         self.t0 = time.time()
@@ -117,9 +93,9 @@ class Tracking(object):
             t_start = time.time()
             while det is None:
                 # capture frame and region of interest, specified by crop region
-                [self.frame,self.roi] = self.capture_frame()
+                cam.capture_frame()
                 # detect april tags in frame
-                detections = self.detect_frame(self.roi)
+                detections = self.detect_frame(cam.frame)
                 ids_detected = [x['id'] for x in detections]
                 if obj.id not in ids_detected:
                     det = None
@@ -128,33 +104,9 @@ class Tracking(object):
                 if (time.time()-t_start)>5:
                     raise Exception('Tag {}  could not be found in frame'.format(obj.id))
 
-            obj.init_detection(0,det)
+            obj.init_detection(time.time()-t_start,det)
             print('Tag {} detected in frame'.format(obj.id))
-        self.scale_factor = self.get_scale_factor()
-        print('Scale factor of {} pixels/mm'.format(self.scale_factor))
 
-    def capture_frame(self):
-        '''
-        ## Description
-        ---
-        Captures frame with attribute `cap` and crops according to `roi_dims`
-
-        ## Arguments
-        ---
-        None
-
-        ## Returns
-        ---
-        3D `np.array` of RGB pixel values for whole frame
-        3D `np.array` of RGB pixel values for whole specified region of interest (roi)
-
-        '''
-        # region of interest (crop region) dimensions
-        [x, y, w, h] = self.roi_dims
-        ret, frame = self.cap.read()
-        # save cropped frame
-        roi = frame[y:y+h, x:x+w]
-        return [frame,roi]
 
     def detect_frame(self,frame):
         '''
@@ -177,9 +129,10 @@ class Tracking(object):
 
         # convert frame to grayscale
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        return self.detector.detect(gray)
+        self.detections = self.detector.detect(gray)
+        return self.detections
 
-    def save_detections(self, detections):
+    def save_detections(self, detections=None, offset=None):
         '''
         ## Description
         ---
@@ -197,9 +150,10 @@ class Tracking(object):
         ---
         void
         '''
-
-        # x and y offset of crop region
-        offset = self.roi_dims[0:2]
+        if detections is None:
+            detections = self.detections
+        if offset is None:
+            offset = [0,0]
         t= time.time()-self.t0
         ids_detected = [x['id']for x in detections]
         for obj in self.tracking_objects:
@@ -207,11 +161,18 @@ class Tracking(object):
                 obj.add_timestep(t, det = None, offset = offset)
             else:
                 obj.add_timestep(t, det = detections[ids_detected.index(obj.id)], offset = offset)
-                if self.show_lines is True and obj.id<100:
-                    # draw line showing orientation of tag
-                    cv2.line(self.frame, (int(obj.x[0]),int(obj.x[1])),\
-                    (int(obj.x[0]+25*np.cos(obj.x[2])), int(obj.x[1]+25*np.sin(obj.x[2]))),\
-                    (0,255,0),2)
+
+    def draw_lines(self, frame, ids):
+        for obj in self.tracking_objects:
+            if obj.id in ids:
+                # draw line showing orientation of tag
+                cv2.line(frame, (int(obj.x[0]),int(obj.x[1])),\
+                (int(obj.x[0]+self.line_length*np.cos(obj.x[2])), int(obj.x[1]+self.line_length*np.sin(obj.x[2]))),\
+                (0,255,0),2)
+
+    def get_centroid(self, tag_ids):
+        ring_tag_xy = [obj.x[:2] for obj in self.tracking_objects if obj.id in tag_ids]
+        return sum(ring_tag_xy)/len(ring_tag_xy)
 
 
     def get_scale_factor(self):
@@ -220,51 +181,10 @@ class Tracking(object):
         '''
         scale_factors = [obj.scale_factor for obj in self.tracking_objects if obj.tag_length is not None]
         # scale_factors = [obj.scale_factor for obj in objects_w_tag_length]
-        return sum(scale_factors)/len(scale_factors)
-
-    def step(self):
-        '''
-        ## Description
-        ---
-        Captures frame, detects tags, and saves detection data to TrackingObjects data class object
-
-        ## Arguments
-        ---
-
-        None
-
-        ## Returns
-        ---
-        void
-        '''
-        [self.frame, self.roi] = self.capture_frame()
-        if self.save_video is True:
-            self.out.write(self.frame)
-
-        self.detections = self.detect_frame(self.roi)
-        self.save_detections(self.detections)
-
-        if self.show_video is True:
-            cv2.imshow('frame', self.frame)
-
-    def close_camera(self):
-        '''
-        ## Description
-        ---
-        Closes camera object along with all camera windows open
-
-        ## Arguments
-        ---
-        None
-
-        ## Returns
-        ---
-        void
-        '''
-        self.cap.release()
-        if self.out is not None:
-            self.out.release()
-        cv2.destroyAllWindows()
+        self.scale_factor = sum(scale_factors)/len(scale_factors)
+        print('Scale factor of {} pixels/mm'.format(self.scale_factor))
+        self.line_length = 15*self.scale_factor
+        return self.scale_factor
 
     def save_data(self, path, local_copy=False):
         '''

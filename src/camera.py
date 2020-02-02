@@ -3,7 +3,7 @@
 # Created Feb 1, 2020
 # Alex Samland (alexsamland@u.northwestern.edu)
 
-class ClassName(object):
+class Camera(object):
 
 
     def __init__(self, video_source=0, save_video=None, frame_width, frame_height,\

@@ -1,0 +1,2583 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.1" />
+<title>smarticletracking API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>smarticletracking</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">################################################################################
+#                                  Tracking Class                              #
+################################################################################
+
+class Tracking(object):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Class for tracking multiple AprilTag objects and managing use of webcam with OpenCV
+
+    &#39;&#39;&#39;
+
+
+    def __init__(self, tag_ids, history_len=None, length_dict=None):
+        &#39;&#39;&#39;
+
+        ## Arguments
+        ---
+
+        | Argument     | Type            | Description                                                                             | Default Value  |
+        | :------      | :--             | :---------                                                                              | :-----------   |
+        | tag_ids      | `list` of `int` | List of tag IDs to track                                                                | N/A            |
+        | frame_width  | `int`           | Frame width of camera capture                                                           | N/A            |
+        | frame_height | `int`           | Frame height of camera capture                                                          | N/A            |
+        | fps          | `int`           | Frames per second of camera capture                                                     | N/A            |
+        | video_source | `string`        | *Optional:* Path of input video file                                                    | 0              |
+        | save_video   | `string`        | *Optional:* Save video to specified path                                                | `None`         |
+        | show_video   | `bool`          | *Optional:* Show video to screen if `True`                                              | `False`        |
+        | history_len  | `int`           | *Optional:* Max length of tracking history to be saved                                  | `None`         |
+        | roi_dims     | `list` of `int` | *Optional:* Two element list that specifies offset from detection frame to global frame | `None`         |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        &#39;&#39;&#39;
+
+        # save as attribute
+        self.history_len = history_len
+
+        # Make sure tag_ids are in ascending order
+        self.tag_ids = deepcopy(tag_ids)
+        self.tag_ids.sort()
+        self.line_length = 25
+
+        if length_dict is None:
+            values = [None]*len(self.tag_ids)
+            self.length_dict = dict(zip(self.tag_ids,values))
+        else:
+            assert len(length_dict) == len(self.tag_ids),\
+             &#34;length_dict should be a dictionary of same length of tag_ids&#34;
+            self.length_dict = length_dict
+
+        # April Tag Detector Object, specify tag family
+        self.detector = apriltag(&#34;tagStandard41h12&#34;)
+
+        # initialize tracking objects
+        self.tracking_objects = [TrackingObject(tag_id, history_length=self.history_len,\
+            tag_length=self.length_dict[tag_id]) for tag_id in self.tag_ids]
+
+    @classmethod
+    def q_pressed(self):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Checks whether &#39;q&#39; key has been pressed
+
+        ## Returns
+        ---
+        `bool`
+
+        &#39;&#39;&#39;
+        return cv2.waitKey(1) &amp; 0xFF == ord(&#39;q&#39;)
+
+
+
+    def start(self,cam):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Initializes April tag detector and creates tracking objects. Additionally gets initial position of objects and sets time for t0
+
+        ## Arguments
+        ---
+
+        | Argument     | Type            | Description                                                        | Default Value  |
+        | :------      | :--             | :---------                                                         | :-----------   |
+        | cam       | `camera` object           | Camera capture object         | N/A            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        None
+
+        &#39;&#39;&#39;
+
+        # set t0 for tracking data
+        self.t0 = time.time()
+
+        for obj in self.tracking_objects:
+            det = None
+            t_start = time.time()
+            while det is None:
+                # capture frame and region of interest, specified by crop region
+                cam.capture_frame()
+                # detect april tags in frame
+                detections = self.detect_frame(cam.frame)
+                ids_detected = [x[&#39;id&#39;] for x in detections]
+                if obj.id not in ids_detected:
+                    det = None
+                else:
+                    det = detections[ids_detected.index(obj.id)]
+                if (time.time()-t_start)&gt;5:
+                    raise Exception(&#39;Tag {}  could not be found in frame&#39;.format(obj.id))
+
+            obj.init_detection(time.time()-t_start,det)
+            print(&#39;Tag {} detected in frame&#39;.format(obj.id))
+
+
+    def detect_frame(self,frame):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Returns state (x, y, theta) given detection and offset
+
+        ## Arguments
+        ---
+
+        | Argument| Type         | Description              | Default Value  |
+        | :------ | :--          | :---------               | :-----------   |
+        | frame     | `np.array` | Frame to detect tags in  | N/A            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        `list` of `dict`s corresponding to each tag detected
+        &#39;&#39;&#39;
+
+        # convert frame to grayscale
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        self.detections = self.detector.detect(gray)
+        return self.detections
+
+    def save_detections(self, detections=None, offset=None):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Saves detection data to TrackingObject data class objects
+
+        ## Arguments
+        ---
+
+        | Argument       | Type             | Description                    | Default Value  |
+        | :------        | :--              | :---------                     | :-----------   |
+        | detections     | `list` of `dict` | List of detection dictionaries | N/A            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        if detections is None:
+            detections = self.detections
+        if offset is None:
+            offset = [0,0]
+        t= time.time()-self.t0
+        ids_detected = [x[&#39;id&#39;]for x in detections]
+        for obj in self.tracking_objects:
+            if obj.id not in ids_detected:
+                obj.add_timestep(t, det = None, offset = offset)
+            else:
+                obj.add_timestep(t, det = detections[ids_detected.index(obj.id)], offset = offset)
+
+    def draw_lines(self, frame, ids):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Draws line on screen showing orientation of tags
+
+        ## Arguments
+        ---
+
+        | Argument| Type         | Description              | Default Value  |
+        | :------ | :--          | :---------               | :-----------   |
+        | frame     | `np.array` | Frame to draw lines on  | N/A            |
+        | ids     | `np.array` | List of tag IDs for wich to draw lines  | N/A            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        `None`
+        &#39;&#39;&#39;
+        for obj in self.tracking_objects:
+            if obj.id in ids:
+                # draw line showing orientation of tag
+                cv2.line(frame, (int(obj.x[0]),int(obj.x[1])),\
+                (int(obj.x[0]+self.line_length*np.cos(obj.x[2])), int(obj.x[1]+self.line_length*np.sin(obj.x[2]))),\
+                (0,255,0),2)
+
+    def get_centroid(self, tag_ids):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Gets centroid of specified tags
+
+        ## Arguments
+        ---
+
+        | Argument| Type         | Description              | Default Value  |
+        | :------ | :--          | :---------               | :-----------   |
+        | frame     | `np.array` | Frame to draw lines on  | N/A            |
+        | tag_ids     | `np.array` | List of tag IDs for wich to draw lines  | N/A            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        `np.array`
+        &#39;&#39;&#39;
+        ring_tag_xy = [obj.x[:2] for obj in self.tracking_objects if obj.id in tag_ids]
+        return sum(ring_tag_xy)/len(ring_tag_xy)
+
+
+    def get_scale_factor(self):
+        &#39;&#39;&#39;
+        Get scale factor (mm/pixels) of camera setup
+        &#39;&#39;&#39;
+        scale_factors = [obj.scale_factor for obj in self.tracking_objects if obj.tag_length is not None]
+        # scale_factors = [obj.scale_factor for obj in objects_w_tag_length]
+        self.scale_factor = sum(scale_factors)/len(scale_factors)
+        print(&#39;Scale factor of {} pixels/mm&#39;.format(self.scale_factor))
+        self.line_length = 15*self.scale_factor
+        return self.scale_factor
+
+    def save_data(self, path, local_copy=False):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Saves data to given file path as .csv file in following format
+        (timestamp, state_tag_1, state_tag2,...state_tag_n)
+
+        ## Arguments
+        ---
+
+        | Argument   | Type     | Description                                | Default Value  |
+        | :------    | :--      | :---------                                 | :-----------   |
+        | path       | `string` | Path to save data                          | N/A            |
+        | local_copy | `bool`   | *Optional:* Returns data locally if `True` | `False`        |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        t = np.array([self.tracking_objects[0].t_history]).T
+        header = &#39;time (s), &#39;
+        data = np.hstack([np.array(obj.history) for obj in self.tracking_objects])
+        for obj in self.tracking_objects:
+            header+= &#39;x{0}, y{0}, theta{0}, &#39;.format(obj.id)
+        data_out = np.hstack([t,data])
+        np.savetxt(path,data_out, delimiter=&#39;,&#39;, header=header)
+
+        if local_copy:
+            return t,S
+
+
+
+################################################################################
+#                                  TrackingObject Class                        #
+################################################################################
+
+class TrackingObject(object):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    This class is a data struct for each April Tag in the frame to store its current state
+    (x, y, theta) as well as a timestamped history of the state. The class also linearly
+    interpolates over missed detections to smooth the data.
+
+    **Public Attributes (for the user):**
+
+    * **id**: April Tag ID (e.g. 1, 3, 16). This corresponds to the smarticle ID
+    * **x**: state (x, y, theta) of most recent detection of tag
+    * **t**: time of most recent detection of tag
+    * **history**: history of states (x,y, theta) of tag
+    * **t_history**: history of detection times of tag
+
+    **Private Attributes (for the class):**
+
+    * **_missed frames**: used for keeping track of missed frames that require linear interpolation
+    * **_object_detected**: flag for indicating whether tag has been initially detected
+    &#39;&#39;&#39;
+
+    def __init__(self, ID, history_length=None, tag_length=None):
+        &#39;&#39;&#39;
+        ## Arguments
+        ---
+
+        | Argument         | Type    | Description                           | Default Value  |
+        | :------          | :--     | :---------                            | :-----------   |
+        | ID               | `int`   | ID of corresponding April Tag         | N/A            |
+        | history_length   | `int`   | Optional max history length to record | `None`         |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        &#39;&#39;&#39;
+
+        # attributes to be accessed by user (Public)
+        self.id = ID
+        # if object is a smarticle (ID &lt;100), it has a known tag
+        # size which can be used for scaling
+        self.tag_length = tag_length
+        self.x = np.zeros(3)
+        self.t = 0
+        # use a deque data structure for history
+        # set a max length of 150 elements or about 10s of data
+        self.history = deque(maxlen=history_length)
+        self.t_history = deque(maxlen=history_length)
+        self.scale_factor = None
+
+        # attributes to be used within class (Private)
+        self._missed_frames = 0
+        self._object_detected = False
+
+    def _get_state(self, det, offset):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Returns state (x, y, theta) given detection and offset
+
+        ## Arguments
+        ---
+
+        | Argument| Type       | Description                                                                 | Default Value  |
+        | :------ | :--        | :---------                                                                  | :-----------   |
+        | det     | `dict`     | Detection of tag from AprilTag library                                      | N/A            |
+        | offset  | `np.array` | Two element list that specifies offset from detection frame to global frame | N/A            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        `np.array` state [x, y, theta]
+        &#39;&#39;&#39;
+        # x and y position of center of tag
+        center = det[&#39;center&#39;]
+        # flip y axis from camera to put origin in bottom left corner
+        center[1]=center[1]
+        # point at center top of tag is average of top right and top left corners
+        center_top = (det[&#39;lb-rb-rt-lt&#39;][2]+det[&#39;lb-rb-rt-lt&#39;][3])/2.
+        center_top[1]=center_top[1]
+        # calculate theta as angle between center and cetner top and angle wrap so it is between 0 and 2pi
+        theta = np.mod(np.arctan2(center_top[1]-center[1],center_top[0]-center[0]),2*np.pi)
+        # record angle so that there are no discontinuities (prevent wrapping between 0 and 2*pi)
+        dtheta = theta-self.x[2]
+        dtheta = np.mod((np.pi+dtheta),2*np.pi)-np.pi
+        new_theta = self.x[2]+dtheta
+        return np.append(center+offset,new_theta)
+
+    def _get_scale_factor(self,det):
+        &#39;&#39;&#39;
+        DOC
+        &#39;&#39;&#39;
+        assert self.tag_length is not None, &#39;Tag length must be specified to get scale factor&#39;
+        bottom_left = det[&#39;lb-rb-rt-lt&#39;][0]
+        bottom_right = det[&#39;lb-rb-rt-lt&#39;][1]
+        top_right = det[&#39;lb-rb-rt-lt&#39;][2]
+        top_left = det[&#39;lb-rb-rt-lt&#39;][3]
+        diag_pixel = 0.5*(np.linalg.norm(bottom_left-top_right)+np.linalg.norm(bottom_right-top_left))
+        diag_len = np.sqrt(2)*self.tag_length
+        # scale factor pixel/unit mm
+        return diag_pixel/diag_len
+
+    def _smooth_missed_frames(self):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        smooths data by linearly interpolating over missed frames
+
+        ## Arguments
+        ---
+        N/A
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        # time of last sucessful detection before this most recent one
+        t0 = self.t_history[-(1+self._missed_frames)]
+        # calculate slope between points
+        m = (self.x-self.history[-(1+self._missed_frames)])/(self.t-t0)
+        # iterate through all of the missed frames
+        while self._missed_frames &gt; 0:
+            # calculate dt between missed frame and t0
+            dt = self.t_history[-(self._missed_frames)] - t0
+            # apply linear smoothing
+            self.history[-(self._missed_frames)] += m*dt
+            # move to next missed frame
+            self._missed_frames-=1
+
+
+    def init_detection(self, t, det, offset = None):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Initializes detections of tags with initial state and time of tag at first detection
+
+        ## Arguments
+        ---
+
+        | Argument| Type           | Description                                                                 | Default Value  |
+        | :------ | :--            | :---------                                                                  | :-----------   |
+        | t       | `int`          | Time of detection                                                           | N/A            |
+        | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
+        | offset  | `list` of `int`| Two element list that specifies offset from detection frame to global frame | `None`         |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        if offset is None:
+            offset = np.zeros(2)
+        self.x = self._get_state(det,offset)
+        if self.tag_length is not None:
+            self.scale_factor = self._get_scale_factor(det)
+        self.t = t
+        # add initial pose and time to history
+        self.t_history.append(self.t)
+        self.history.append(self.x)
+        # set detection flag to true
+        self._object_detected = True
+
+    def add_timestep(self, t, det=None, offset = None):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Updates current state and history lists based on provided detection and also handles linear interpolation for missing detections
+
+        ## Arguments
+        ---
+
+        | Argument| Type           | Description                                                                 | Default Value  |
+        | :------ | :--            | :---------                                                                  | :-----------   |
+        | t       | `int`          | Time of detection                                                           | N/A            |
+        | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
+        | offset  | `list` of `int`| Two element list that specifies offset from global frame to detection frame | `None`         |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        assert self._object_detected is True, &#34;Object not initially detected&#34;
+
+        self.t = t
+        # if offset is not provided, set offset to [0, 00] (no offset)
+        if offset is None:
+            offset = np.zeros(2)
+
+        # if object is not detected in this time frame carry over last beleif of
+        # object state and increment the missed frames counter
+        if det is None:
+            self._missed_frames +=1
+        else:
+            self.x = self._get_state(det,offset)
+            # linearly smooth missed frames
+            if self._missed_frames &gt; 0:
+                self._smooth_missed_frames()
+            # add most recent time step to history
+        self.history.append(self.x)
+        self.t_history.append(self.t)
+
+
+
+
+################################################################################
+#                                  Camera Class                                #
+################################################################################
+
+class Camera(object):
+
+
+    def __init__(self, frame_width, frame_height, fps, video_source=0, save_video=None,\
+        show_video=True, roi_dims=None, autofocus=0 ,focus_level=0, brightness=30, contrast=100):
+        &#39;&#39;&#39;Initializes camera with specified settings as tuned tracking settings
+        (ie. turns off autofocus, sets brightness and contrast)
+
+        ## Arguments
+        ---
+
+        | Argument     | Type            | Description                                                                             | Default Value  |
+        | :------      | :--             | :---------                                                                              |:-----------    |
+        | frame_width  | `int`           | Frame width of camera capture                                                           | N/A            |
+        | frame_height | `int`           | Frame height of camera capture                                                          | N/A            |
+        | fps          | `int`           | Frames per second of camera capture                                                     | N/A            |
+        | video_source | `string`        | *Optional:* Path of input video file                                                    | 0              |
+        | save_video   | `string`        | *Optional:* Save video to specified path                                                | `None`         |
+        | show_video   | `bool`          | *Optional:* Show video to screen if `True`                                              | `False`        |
+        | history_len  | `int`           | *Optional:* Max length of tracking history to be saved                                  | `None`         |
+        | roi_dims     | `list` of `int` | *Optional:* Two element list that specifies offset from detection frame to global frame | `None`         |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        &#39;&#39;&#39;
+        # Camera Settings
+        self.video_source = video_source
+        self.save_video = save_video
+        self.show_video = show_video
+        self.autofocus = autofocus
+        self.focus_level = focus_level
+        self.brightness = brightness
+        self.contrast = contrast
+        self.fourcc = cv2.VideoWriter_fourcc(*&#39;MJPG&#39;)
+        self.cap = cv2.VideoCapture(self.video_source) # sets input source for video capture
+        self.cap.set(6, self.fourcc) # setting MJPG codec
+        self.cap.set(3, frame_width) # Width
+        self.cap.set(4, frame_height) # Height
+        self.frame_width = int(self.cap.get(3))
+        self.frame_height = int(self.cap.get(4))
+
+        if roi_dims is None:
+            self.roi_dims = [0,0,self.frame_height,self.frame_width]
+        else:
+            assert len(roi_dims) is 4, &#39;roi_dims is 4 element list of form: [x, y, w, h]&#39;
+            self.roi_dims = roi_dims
+
+        self.cap.set(5,fps) # fps
+        self.fps = self.cap.get(5)
+        self.cap.set(cv2.CAP_PROP_AUTOFOCUS, self.autofocus) # disable autofocus
+        if self.focus_level is not None:
+            self.cap.set(28,self.focus_level) # set focus level
+        self.cap.set(cv2.CAP_PROP_BRIGHTNESS,self.brightness) # low brightness
+        self.cap.set(cv2.CAP_PROP_CONTRAST,self.contrast) # high contrast
+        if self.save_video is not None:
+            # Save video to file
+            self.out = cv2.VideoWriter(self.save_video,self.fourcc, self.fps, (self.frame_width,self.frame_height))
+        else:
+            self.out = None
+
+    def set_roi_dims(self, center, h, w):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Sets `roi_dims` or region of interest dimension that define a cropped area of the entire captured frame.
+
+        ## Arguments
+        ---
+
+        | Argument     | Type            | Description                                                        | Default Value  |
+        | :------      | :--             | :---------                                                         | :-----------   |
+        | center       | `int`           | (x,y) center of roi (usually corresponds to ring center)           | N/A            |
+        | h            | `int`           | height in pixels of roi                                            | N/A            |
+        | w            | `int`           | width in pixels of roi                                             | N/A            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        None
+
+        &#39;&#39;&#39;
+
+        x = int(center[0]-0.5*w)
+        np.clip(x,0,self.frame_width)
+        y =int(center[1]-0.5*h)
+        np.clip(y,0,self.frame_height)
+
+        self.roi_dims=[x,y,int(h), int(w)]
+
+    def capture_frame(self):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Captures frame with attribute `cap` and crops according to `roi_dims`
+
+        ## Arguments
+        ---
+        None
+
+        ## Returns
+        ---
+        3D `np.array` of RGB pixel values for whole frame  
+        3D `np.array` of RGB pixel values for whole specified region of interest (roi)
+
+        &#39;&#39;&#39;
+        # region of interest (crop region) dimensions
+        [x, y, w, h] = self.roi_dims
+        self.ret, self.frame = self.cap.read()
+        # save cropped frame
+        self.roi = self.frame[y:y+h, x:x+w]
+
+        return [self.ret, self.frame, self.roi]
+
+    def write_frame(self, frame=None):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Writes video frame to file specified in class constructor if `self.save_video&#39; is `True`
+
+        ## Arguments
+        ---
+
+        | Argument     | Type            | Description                                                        | Default Value  |
+        | :------      | :--             | :---------                                                         | :-----------   |
+        | frame        | `np.array`      | *Optional:* 3D `np.array` of RGB pixel values. If not provided, `self.frame` is used.          | `None`            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        None
+
+        &#39;&#39;&#39;
+        if frame is None:
+            frame = self.frame
+        if self.save_video is not None:
+            self.out.write(frame)
+
+    def show_frame(self, frame=None):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Displays video frame if `self.show_video&#39; is `True`
+
+        ## Arguments
+        ---
+
+        | Argument     | Type            | Description                                                        | Default Value  |
+        | :------      | :--             | :---------                                                         | :-----------   |
+        | frame        | `np.array`      | *Optional:* 3D `np.array` of RGB pixel values. If not provided, `self.frame` is used.          | `None`            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        None
+
+        &#39;&#39;&#39;
+        if frame is None:
+            frame = self.frame
+        if self.show_video is True:
+            cv2.imshow(&#39;frame&#39;, frame)
+
+
+
+
+    def close(self):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Closes camera object along with all camera windows open
+
+        ## Arguments
+        ---
+        None
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        self.cap.release()
+        if self.out is not None:
+            self.out.release()
+        cv2.destroyAllWindows()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="smarticletracking.Camera"><code class="flex name class">
+<span>class <span class="ident">Camera</span></span>
+<span>(</span><span>frame_width, frame_height, fps, video_source=0, save_video=None, show_video=True, roi_dims=None, autofocus=0, focus_level=0, brightness=30, contrast=100)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Initializes camera with specified settings as tuned tracking settings
+(ie. turns off autofocus, sets brightness and contrast)</p>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">frame_width</td>
+<td align="left"><code>int</code></td>
+<td align="left">Frame width of camera capture</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">frame_height</td>
+<td align="left"><code>int</code></td>
+<td align="left">Frame height of camera capture</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">fps</td>
+<td align="left"><code>int</code></td>
+<td align="left">Frames per second of camera capture</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">video_source</td>
+<td align="left"><code>string</code></td>
+<td align="left"><em>Optional:</em> Path of input video file</td>
+<td align="left">0</td>
+</tr>
+<tr>
+<td align="left">save_video</td>
+<td align="left"><code>string</code></td>
+<td align="left"><em>Optional:</em> Save video to specified path</td>
+<td align="left"><code>None</code></td>
+</tr>
+<tr>
+<td align="left">show_video</td>
+<td align="left"><code>bool</code></td>
+<td align="left"><em>Optional:</em> Show video to screen if <code>True</code></td>
+<td align="left"><code>False</code></td>
+</tr>
+<tr>
+<td align="left">history_len</td>
+<td align="left"><code>int</code></td>
+<td align="left"><em>Optional:</em> Max length of tracking history to be saved</td>
+<td align="left"><code>None</code></td>
+</tr>
+<tr>
+<td align="left">roi_dims</td>
+<td align="left"><code>list</code> of <code>int</code></td>
+<td align="left"><em>Optional:</em> Two element list that specifies offset from detection frame to global frame</td>
+<td align="left"><code>None</code></td>
+</tr>
+<tr>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=900/></td>
+<td align="left"><img width=250/></td>
+</tr>
+</tbody>
+</table></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Camera(object):
+
+
+    def __init__(self, frame_width, frame_height, fps, video_source=0, save_video=None,\
+        show_video=True, roi_dims=None, autofocus=0 ,focus_level=0, brightness=30, contrast=100):
+        &#39;&#39;&#39;Initializes camera with specified settings as tuned tracking settings
+        (ie. turns off autofocus, sets brightness and contrast)
+
+        ## Arguments
+        ---
+
+        | Argument     | Type            | Description                                                                             | Default Value  |
+        | :------      | :--             | :---------                                                                              |:-----------    |
+        | frame_width  | `int`           | Frame width of camera capture                                                           | N/A            |
+        | frame_height | `int`           | Frame height of camera capture                                                          | N/A            |
+        | fps          | `int`           | Frames per second of camera capture                                                     | N/A            |
+        | video_source | `string`        | *Optional:* Path of input video file                                                    | 0              |
+        | save_video   | `string`        | *Optional:* Save video to specified path                                                | `None`         |
+        | show_video   | `bool`          | *Optional:* Show video to screen if `True`                                              | `False`        |
+        | history_len  | `int`           | *Optional:* Max length of tracking history to be saved                                  | `None`         |
+        | roi_dims     | `list` of `int` | *Optional:* Two element list that specifies offset from detection frame to global frame | `None`         |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        &#39;&#39;&#39;
+        # Camera Settings
+        self.video_source = video_source
+        self.save_video = save_video
+        self.show_video = show_video
+        self.autofocus = autofocus
+        self.focus_level = focus_level
+        self.brightness = brightness
+        self.contrast = contrast
+        self.fourcc = cv2.VideoWriter_fourcc(*&#39;MJPG&#39;)
+        self.cap = cv2.VideoCapture(self.video_source) # sets input source for video capture
+        self.cap.set(6, self.fourcc) # setting MJPG codec
+        self.cap.set(3, frame_width) # Width
+        self.cap.set(4, frame_height) # Height
+        self.frame_width = int(self.cap.get(3))
+        self.frame_height = int(self.cap.get(4))
+
+        if roi_dims is None:
+            self.roi_dims = [0,0,self.frame_height,self.frame_width]
+        else:
+            assert len(roi_dims) is 4, &#39;roi_dims is 4 element list of form: [x, y, w, h]&#39;
+            self.roi_dims = roi_dims
+
+        self.cap.set(5,fps) # fps
+        self.fps = self.cap.get(5)
+        self.cap.set(cv2.CAP_PROP_AUTOFOCUS, self.autofocus) # disable autofocus
+        if self.focus_level is not None:
+            self.cap.set(28,self.focus_level) # set focus level
+        self.cap.set(cv2.CAP_PROP_BRIGHTNESS,self.brightness) # low brightness
+        self.cap.set(cv2.CAP_PROP_CONTRAST,self.contrast) # high contrast
+        if self.save_video is not None:
+            # Save video to file
+            self.out = cv2.VideoWriter(self.save_video,self.fourcc, self.fps, (self.frame_width,self.frame_height))
+        else:
+            self.out = None
+
+    def set_roi_dims(self, center, h, w):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Sets `roi_dims` or region of interest dimension that define a cropped area of the entire captured frame.
+
+        ## Arguments
+        ---
+
+        | Argument     | Type            | Description                                                        | Default Value  |
+        | :------      | :--             | :---------                                                         | :-----------   |
+        | center       | `int`           | (x,y) center of roi (usually corresponds to ring center)           | N/A            |
+        | h            | `int`           | height in pixels of roi                                            | N/A            |
+        | w            | `int`           | width in pixels of roi                                             | N/A            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        None
+
+        &#39;&#39;&#39;
+
+        x = int(center[0]-0.5*w)
+        np.clip(x,0,self.frame_width)
+        y =int(center[1]-0.5*h)
+        np.clip(y,0,self.frame_height)
+
+        self.roi_dims=[x,y,int(h), int(w)]
+
+    def capture_frame(self):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Captures frame with attribute `cap` and crops according to `roi_dims`
+
+        ## Arguments
+        ---
+        None
+
+        ## Returns
+        ---
+        3D `np.array` of RGB pixel values for whole frame  
+        3D `np.array` of RGB pixel values for whole specified region of interest (roi)
+
+        &#39;&#39;&#39;
+        # region of interest (crop region) dimensions
+        [x, y, w, h] = self.roi_dims
+        self.ret, self.frame = self.cap.read()
+        # save cropped frame
+        self.roi = self.frame[y:y+h, x:x+w]
+
+        return [self.ret, self.frame, self.roi]
+
+    def write_frame(self, frame=None):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Writes video frame to file specified in class constructor if `self.save_video&#39; is `True`
+
+        ## Arguments
+        ---
+
+        | Argument     | Type            | Description                                                        | Default Value  |
+        | :------      | :--             | :---------                                                         | :-----------   |
+        | frame        | `np.array`      | *Optional:* 3D `np.array` of RGB pixel values. If not provided, `self.frame` is used.          | `None`            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        None
+
+        &#39;&#39;&#39;
+        if frame is None:
+            frame = self.frame
+        if self.save_video is not None:
+            self.out.write(frame)
+
+    def show_frame(self, frame=None):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Displays video frame if `self.show_video&#39; is `True`
+
+        ## Arguments
+        ---
+
+        | Argument     | Type            | Description                                                        | Default Value  |
+        | :------      | :--             | :---------                                                         | :-----------   |
+        | frame        | `np.array`      | *Optional:* 3D `np.array` of RGB pixel values. If not provided, `self.frame` is used.          | `None`            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        None
+
+        &#39;&#39;&#39;
+        if frame is None:
+            frame = self.frame
+        if self.show_video is True:
+            cv2.imshow(&#39;frame&#39;, frame)
+
+
+
+
+    def close(self):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Closes camera object along with all camera windows open
+
+        ## Arguments
+        ---
+        None
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        self.cap.release()
+        if self.out is not None:
+            self.out.release()
+        cv2.destroyAllWindows()</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="smarticletracking.Camera.capture_frame"><code class="name flex">
+<span>def <span class="ident">capture_frame</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>Captures frame with attribute <code>cap</code> and crops according to <code>roi_dims</code></p>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<p>None</p>
+<h2 id="returns">Returns</h2>
+<hr>
+<p>3D <code>np.array</code> of RGB pixel values for whole frame<br>
+3D <code>np.array</code> of RGB pixel values for whole specified region of interest (roi)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def capture_frame(self):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Captures frame with attribute `cap` and crops according to `roi_dims`
+
+    ## Arguments
+    ---
+    None
+
+    ## Returns
+    ---
+    3D `np.array` of RGB pixel values for whole frame  
+    3D `np.array` of RGB pixel values for whole specified region of interest (roi)
+
+    &#39;&#39;&#39;
+    # region of interest (crop region) dimensions
+    [x, y, w, h] = self.roi_dims
+    self.ret, self.frame = self.cap.read()
+    # save cropped frame
+    self.roi = self.frame[y:y+h, x:x+w]
+
+    return [self.ret, self.frame, self.roi]</code></pre>
+</details>
+</dd>
+<dt id="smarticletracking.Camera.close"><code class="name flex">
+<span>def <span class="ident">close</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>Closes camera object along with all camera windows open</p>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<p>None</p>
+<h2 id="returns">Returns</h2>
+<hr>
+<p>void</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def close(self):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Closes camera object along with all camera windows open
+
+    ## Arguments
+    ---
+    None
+
+    ## Returns
+    ---
+    void
+    &#39;&#39;&#39;
+    self.cap.release()
+    if self.out is not None:
+        self.out.release()
+    cv2.destroyAllWindows()</code></pre>
+</details>
+</dd>
+<dt id="smarticletracking.Camera.set_roi_dims"><code class="name flex">
+<span>def <span class="ident">set_roi_dims</span></span>(<span>self, center, h, w)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>Sets <code>roi_dims</code> or region of interest dimension that define a cropped area of the entire captured frame.</p>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">center</td>
+<td align="left"><code>int</code></td>
+<td align="left">(x,y) center of roi (usually corresponds to ring center)</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">h</td>
+<td align="left"><code>int</code></td>
+<td align="left">height in pixels of roi</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">w</td>
+<td align="left"><code>int</code></td>
+<td align="left">width in pixels of roi</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=900/></td>
+<td align="left"><img width=250/></td>
+</tr>
+</tbody>
+</table>
+<h2 id="returns">Returns</h2>
+<hr>
+<p>None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_roi_dims(self, center, h, w):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Sets `roi_dims` or region of interest dimension that define a cropped area of the entire captured frame.
+
+    ## Arguments
+    ---
+
+    | Argument     | Type            | Description                                                        | Default Value  |
+    | :------      | :--             | :---------                                                         | :-----------   |
+    | center       | `int`           | (x,y) center of roi (usually corresponds to ring center)           | N/A            |
+    | h            | `int`           | height in pixels of roi                                            | N/A            |
+    | w            | `int`           | width in pixels of roi                                             | N/A            |
+    |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+    ## Returns
+    ---
+    None
+
+    &#39;&#39;&#39;
+
+    x = int(center[0]-0.5*w)
+    np.clip(x,0,self.frame_width)
+    y =int(center[1]-0.5*h)
+    np.clip(y,0,self.frame_height)
+
+    self.roi_dims=[x,y,int(h), int(w)]</code></pre>
+</details>
+</dd>
+<dt id="smarticletracking.Camera.show_frame"><code class="name flex">
+<span>def <span class="ident">show_frame</span></span>(<span>self, frame=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>Displays video frame if <code>self.show_video' is</code>True`</p>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">frame</td>
+<td align="left"><code>np.array</code></td>
+<td align="left"><em>Optional:</em> 3D <code>np.array</code> of RGB pixel values. If not provided, <code>self.frame</code> is used.</td>
+<td align="left"><code>None</code></td>
+</tr>
+<tr>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=900/></td>
+<td align="left"><img width=250/></td>
+</tr>
+</tbody>
+</table>
+<h2 id="returns">Returns</h2>
+<hr>
+<p>None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def show_frame(self, frame=None):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Displays video frame if `self.show_video&#39; is `True`
+
+    ## Arguments
+    ---
+
+    | Argument     | Type            | Description                                                        | Default Value  |
+    | :------      | :--             | :---------                                                         | :-----------   |
+    | frame        | `np.array`      | *Optional:* 3D `np.array` of RGB pixel values. If not provided, `self.frame` is used.          | `None`            |
+    |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+    ## Returns
+    ---
+    None
+
+    &#39;&#39;&#39;
+    if frame is None:
+        frame = self.frame
+    if self.show_video is True:
+        cv2.imshow(&#39;frame&#39;, frame)</code></pre>
+</details>
+</dd>
+<dt id="smarticletracking.Camera.write_frame"><code class="name flex">
+<span>def <span class="ident">write_frame</span></span>(<span>self, frame=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>Writes video frame to file specified in class constructor if <code>self.save_video' is</code>True`</p>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">frame</td>
+<td align="left"><code>np.array</code></td>
+<td align="left"><em>Optional:</em> 3D <code>np.array</code> of RGB pixel values. If not provided, <code>self.frame</code> is used.</td>
+<td align="left"><code>None</code></td>
+</tr>
+<tr>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=900/></td>
+<td align="left"><img width=250/></td>
+</tr>
+</tbody>
+</table>
+<h2 id="returns">Returns</h2>
+<hr>
+<p>None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def write_frame(self, frame=None):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Writes video frame to file specified in class constructor if `self.save_video&#39; is `True`
+
+    ## Arguments
+    ---
+
+    | Argument     | Type            | Description                                                        | Default Value  |
+    | :------      | :--             | :---------                                                         | :-----------   |
+    | frame        | `np.array`      | *Optional:* 3D `np.array` of RGB pixel values. If not provided, `self.frame` is used.          | `None`            |
+    |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+    ## Returns
+    ---
+    None
+
+    &#39;&#39;&#39;
+    if frame is None:
+        frame = self.frame
+    if self.save_video is not None:
+        self.out.write(frame)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="smarticletracking.Tracking"><code class="flex name class">
+<span>class <span class="ident">Tracking</span></span>
+<span>(</span><span>tag_ids, history_len=None, length_dict=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>Class for tracking multiple AprilTag objects and managing use of webcam with OpenCV</p>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">tag_ids</td>
+<td align="left"><code>list</code> of <code>int</code></td>
+<td align="left">List of tag IDs to track</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">frame_width</td>
+<td align="left"><code>int</code></td>
+<td align="left">Frame width of camera capture</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">frame_height</td>
+<td align="left"><code>int</code></td>
+<td align="left">Frame height of camera capture</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">fps</td>
+<td align="left"><code>int</code></td>
+<td align="left">Frames per second of camera capture</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">video_source</td>
+<td align="left"><code>string</code></td>
+<td align="left"><em>Optional:</em> Path of input video file</td>
+<td align="left">0</td>
+</tr>
+<tr>
+<td align="left">save_video</td>
+<td align="left"><code>string</code></td>
+<td align="left"><em>Optional:</em> Save video to specified path</td>
+<td align="left"><code>None</code></td>
+</tr>
+<tr>
+<td align="left">show_video</td>
+<td align="left"><code>bool</code></td>
+<td align="left"><em>Optional:</em> Show video to screen if <code>True</code></td>
+<td align="left"><code>False</code></td>
+</tr>
+<tr>
+<td align="left">history_len</td>
+<td align="left"><code>int</code></td>
+<td align="left"><em>Optional:</em> Max length of tracking history to be saved</td>
+<td align="left"><code>None</code></td>
+</tr>
+<tr>
+<td align="left">roi_dims</td>
+<td align="left"><code>list</code> of <code>int</code></td>
+<td align="left"><em>Optional:</em> Two element list that specifies offset from detection frame to global frame</td>
+<td align="left"><code>None</code></td>
+</tr>
+<tr>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=900/></td>
+<td align="left"><img width=250/></td>
+</tr>
+</tbody>
+</table></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Tracking(object):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Class for tracking multiple AprilTag objects and managing use of webcam with OpenCV
+
+    &#39;&#39;&#39;
+
+
+    def __init__(self, tag_ids, history_len=None, length_dict=None):
+        &#39;&#39;&#39;
+
+        ## Arguments
+        ---
+
+        | Argument     | Type            | Description                                                                             | Default Value  |
+        | :------      | :--             | :---------                                                                              | :-----------   |
+        | tag_ids      | `list` of `int` | List of tag IDs to track                                                                | N/A            |
+        | frame_width  | `int`           | Frame width of camera capture                                                           | N/A            |
+        | frame_height | `int`           | Frame height of camera capture                                                          | N/A            |
+        | fps          | `int`           | Frames per second of camera capture                                                     | N/A            |
+        | video_source | `string`        | *Optional:* Path of input video file                                                    | 0              |
+        | save_video   | `string`        | *Optional:* Save video to specified path                                                | `None`         |
+        | show_video   | `bool`          | *Optional:* Show video to screen if `True`                                              | `False`        |
+        | history_len  | `int`           | *Optional:* Max length of tracking history to be saved                                  | `None`         |
+        | roi_dims     | `list` of `int` | *Optional:* Two element list that specifies offset from detection frame to global frame | `None`         |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        &#39;&#39;&#39;
+
+        # save as attribute
+        self.history_len = history_len
+
+        # Make sure tag_ids are in ascending order
+        self.tag_ids = deepcopy(tag_ids)
+        self.tag_ids.sort()
+        self.line_length = 25
+
+        if length_dict is None:
+            values = [None]*len(self.tag_ids)
+            self.length_dict = dict(zip(self.tag_ids,values))
+        else:
+            assert len(length_dict) == len(self.tag_ids),\
+             &#34;length_dict should be a dictionary of same length of tag_ids&#34;
+            self.length_dict = length_dict
+
+        # April Tag Detector Object, specify tag family
+        self.detector = apriltag(&#34;tagStandard41h12&#34;)
+
+        # initialize tracking objects
+        self.tracking_objects = [TrackingObject(tag_id, history_length=self.history_len,\
+            tag_length=self.length_dict[tag_id]) for tag_id in self.tag_ids]
+
+    @classmethod
+    def q_pressed(self):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Checks whether &#39;q&#39; key has been pressed
+
+        ## Returns
+        ---
+        `bool`
+
+        &#39;&#39;&#39;
+        return cv2.waitKey(1) &amp; 0xFF == ord(&#39;q&#39;)
+
+
+
+    def start(self,cam):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Initializes April tag detector and creates tracking objects. Additionally gets initial position of objects and sets time for t0
+
+        ## Arguments
+        ---
+
+        | Argument     | Type            | Description                                                        | Default Value  |
+        | :------      | :--             | :---------                                                         | :-----------   |
+        | cam       | `camera` object           | Camera capture object         | N/A            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        None
+
+        &#39;&#39;&#39;
+
+        # set t0 for tracking data
+        self.t0 = time.time()
+
+        for obj in self.tracking_objects:
+            det = None
+            t_start = time.time()
+            while det is None:
+                # capture frame and region of interest, specified by crop region
+                cam.capture_frame()
+                # detect april tags in frame
+                detections = self.detect_frame(cam.frame)
+                ids_detected = [x[&#39;id&#39;] for x in detections]
+                if obj.id not in ids_detected:
+                    det = None
+                else:
+                    det = detections[ids_detected.index(obj.id)]
+                if (time.time()-t_start)&gt;5:
+                    raise Exception(&#39;Tag {}  could not be found in frame&#39;.format(obj.id))
+
+            obj.init_detection(time.time()-t_start,det)
+            print(&#39;Tag {} detected in frame&#39;.format(obj.id))
+
+
+    def detect_frame(self,frame):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Returns state (x, y, theta) given detection and offset
+
+        ## Arguments
+        ---
+
+        | Argument| Type         | Description              | Default Value  |
+        | :------ | :--          | :---------               | :-----------   |
+        | frame     | `np.array` | Frame to detect tags in  | N/A            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        `list` of `dict`s corresponding to each tag detected
+        &#39;&#39;&#39;
+
+        # convert frame to grayscale
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        self.detections = self.detector.detect(gray)
+        return self.detections
+
+    def save_detections(self, detections=None, offset=None):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Saves detection data to TrackingObject data class objects
+
+        ## Arguments
+        ---
+
+        | Argument       | Type             | Description                    | Default Value  |
+        | :------        | :--              | :---------                     | :-----------   |
+        | detections     | `list` of `dict` | List of detection dictionaries | N/A            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        if detections is None:
+            detections = self.detections
+        if offset is None:
+            offset = [0,0]
+        t= time.time()-self.t0
+        ids_detected = [x[&#39;id&#39;]for x in detections]
+        for obj in self.tracking_objects:
+            if obj.id not in ids_detected:
+                obj.add_timestep(t, det = None, offset = offset)
+            else:
+                obj.add_timestep(t, det = detections[ids_detected.index(obj.id)], offset = offset)
+
+    def draw_lines(self, frame, ids):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Draws line on screen showing orientation of tags
+
+        ## Arguments
+        ---
+
+        | Argument| Type         | Description              | Default Value  |
+        | :------ | :--          | :---------               | :-----------   |
+        | frame     | `np.array` | Frame to draw lines on  | N/A            |
+        | ids     | `np.array` | List of tag IDs for wich to draw lines  | N/A            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        `None`
+        &#39;&#39;&#39;
+        for obj in self.tracking_objects:
+            if obj.id in ids:
+                # draw line showing orientation of tag
+                cv2.line(frame, (int(obj.x[0]),int(obj.x[1])),\
+                (int(obj.x[0]+self.line_length*np.cos(obj.x[2])), int(obj.x[1]+self.line_length*np.sin(obj.x[2]))),\
+                (0,255,0),2)
+
+    def get_centroid(self, tag_ids):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Gets centroid of specified tags
+
+        ## Arguments
+        ---
+
+        | Argument| Type         | Description              | Default Value  |
+        | :------ | :--          | :---------               | :-----------   |
+        | frame     | `np.array` | Frame to draw lines on  | N/A            |
+        | tag_ids     | `np.array` | List of tag IDs for wich to draw lines  | N/A            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        `np.array`
+        &#39;&#39;&#39;
+        ring_tag_xy = [obj.x[:2] for obj in self.tracking_objects if obj.id in tag_ids]
+        return sum(ring_tag_xy)/len(ring_tag_xy)
+
+
+    def get_scale_factor(self):
+        &#39;&#39;&#39;
+        Get scale factor (mm/pixels) of camera setup
+        &#39;&#39;&#39;
+        scale_factors = [obj.scale_factor for obj in self.tracking_objects if obj.tag_length is not None]
+        # scale_factors = [obj.scale_factor for obj in objects_w_tag_length]
+        self.scale_factor = sum(scale_factors)/len(scale_factors)
+        print(&#39;Scale factor of {} pixels/mm&#39;.format(self.scale_factor))
+        self.line_length = 15*self.scale_factor
+        return self.scale_factor
+
+    def save_data(self, path, local_copy=False):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Saves data to given file path as .csv file in following format
+        (timestamp, state_tag_1, state_tag2,...state_tag_n)
+
+        ## Arguments
+        ---
+
+        | Argument   | Type     | Description                                | Default Value  |
+        | :------    | :--      | :---------                                 | :-----------   |
+        | path       | `string` | Path to save data                          | N/A            |
+        | local_copy | `bool`   | *Optional:* Returns data locally if `True` | `False`        |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        t = np.array([self.tracking_objects[0].t_history]).T
+        header = &#39;time (s), &#39;
+        data = np.hstack([np.array(obj.history) for obj in self.tracking_objects])
+        for obj in self.tracking_objects:
+            header+= &#39;x{0}, y{0}, theta{0}, &#39;.format(obj.id)
+        data_out = np.hstack([t,data])
+        np.savetxt(path,data_out, delimiter=&#39;,&#39;, header=header)
+
+        if local_copy:
+            return t,S</code></pre>
+</details>
+<h3>Static methods</h3>
+<dl>
+<dt id="smarticletracking.Tracking.q_pressed"><code class="name flex">
+<span>def <span class="ident">q_pressed</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>Checks whether 'q' key has been pressed</p>
+<h2 id="returns">Returns</h2>
+<hr>
+<p><code>bool</code></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def q_pressed(self):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Checks whether &#39;q&#39; key has been pressed
+
+    ## Returns
+    ---
+    `bool`
+
+    &#39;&#39;&#39;
+    return cv2.waitKey(1) &amp; 0xFF == ord(&#39;q&#39;)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="smarticletracking.Tracking.detect_frame"><code class="name flex">
+<span>def <span class="ident">detect_frame</span></span>(<span>self, frame)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>Returns state (x, y, theta) given detection and offset</p>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">frame</td>
+<td align="left"><code>np.array</code></td>
+<td align="left">Frame to detect tags in</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=900/></td>
+<td align="left"><img width=250/></td>
+</tr>
+</tbody>
+</table>
+<h2 id="returns">Returns</h2>
+<hr>
+<p><code>list</code> of <code>dict</code>s corresponding to each tag detected</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def detect_frame(self,frame):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Returns state (x, y, theta) given detection and offset
+
+    ## Arguments
+    ---
+
+    | Argument| Type         | Description              | Default Value  |
+    | :------ | :--          | :---------               | :-----------   |
+    | frame     | `np.array` | Frame to detect tags in  | N/A            |
+    |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+    ## Returns
+    ---
+    `list` of `dict`s corresponding to each tag detected
+    &#39;&#39;&#39;
+
+    # convert frame to grayscale
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    self.detections = self.detector.detect(gray)
+    return self.detections</code></pre>
+</details>
+</dd>
+<dt id="smarticletracking.Tracking.draw_lines"><code class="name flex">
+<span>def <span class="ident">draw_lines</span></span>(<span>self, frame, ids)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>Draws line on screen showing orientation of tags</p>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">frame</td>
+<td align="left"><code>np.array</code></td>
+<td align="left">Frame to draw lines on</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">ids</td>
+<td align="left"><code>np.array</code></td>
+<td align="left">List of tag IDs for wich to draw lines</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=900/></td>
+<td align="left"><img width=250/></td>
+</tr>
+</tbody>
+</table>
+<h2 id="returns">Returns</h2>
+<hr>
+<p><code>None</code></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def draw_lines(self, frame, ids):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Draws line on screen showing orientation of tags
+
+    ## Arguments
+    ---
+
+    | Argument| Type         | Description              | Default Value  |
+    | :------ | :--          | :---------               | :-----------   |
+    | frame     | `np.array` | Frame to draw lines on  | N/A            |
+    | ids     | `np.array` | List of tag IDs for wich to draw lines  | N/A            |
+    |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+    ## Returns
+    ---
+    `None`
+    &#39;&#39;&#39;
+    for obj in self.tracking_objects:
+        if obj.id in ids:
+            # draw line showing orientation of tag
+            cv2.line(frame, (int(obj.x[0]),int(obj.x[1])),\
+            (int(obj.x[0]+self.line_length*np.cos(obj.x[2])), int(obj.x[1]+self.line_length*np.sin(obj.x[2]))),\
+            (0,255,0),2)</code></pre>
+</details>
+</dd>
+<dt id="smarticletracking.Tracking.get_centroid"><code class="name flex">
+<span>def <span class="ident">get_centroid</span></span>(<span>self, tag_ids)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>Gets centroid of specified tags</p>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">frame</td>
+<td align="left"><code>np.array</code></td>
+<td align="left">Frame to draw lines on</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">tag_ids</td>
+<td align="left"><code>np.array</code></td>
+<td align="left">List of tag IDs for wich to draw lines</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=900/></td>
+<td align="left"><img width=250/></td>
+</tr>
+</tbody>
+</table>
+<h2 id="returns">Returns</h2>
+<hr>
+<p><code>np.array</code></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_centroid(self, tag_ids):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Gets centroid of specified tags
+
+    ## Arguments
+    ---
+
+    | Argument| Type         | Description              | Default Value  |
+    | :------ | :--          | :---------               | :-----------   |
+    | frame     | `np.array` | Frame to draw lines on  | N/A            |
+    | tag_ids     | `np.array` | List of tag IDs for wich to draw lines  | N/A            |
+    |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+    ## Returns
+    ---
+    `np.array`
+    &#39;&#39;&#39;
+    ring_tag_xy = [obj.x[:2] for obj in self.tracking_objects if obj.id in tag_ids]
+    return sum(ring_tag_xy)/len(ring_tag_xy)</code></pre>
+</details>
+</dd>
+<dt id="smarticletracking.Tracking.get_scale_factor"><code class="name flex">
+<span>def <span class="ident">get_scale_factor</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get scale factor (mm/pixels) of camera setup</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_scale_factor(self):
+    &#39;&#39;&#39;
+    Get scale factor (mm/pixels) of camera setup
+    &#39;&#39;&#39;
+    scale_factors = [obj.scale_factor for obj in self.tracking_objects if obj.tag_length is not None]
+    # scale_factors = [obj.scale_factor for obj in objects_w_tag_length]
+    self.scale_factor = sum(scale_factors)/len(scale_factors)
+    print(&#39;Scale factor of {} pixels/mm&#39;.format(self.scale_factor))
+    self.line_length = 15*self.scale_factor
+    return self.scale_factor</code></pre>
+</details>
+</dd>
+<dt id="smarticletracking.Tracking.save_data"><code class="name flex">
+<span>def <span class="ident">save_data</span></span>(<span>self, path, local_copy=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>Saves data to given file path as .csv file in following format
+(timestamp, state_tag_1, state_tag2,&hellip;state_tag_n)</p>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">path</td>
+<td align="left"><code>string</code></td>
+<td align="left">Path to save data</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">local_copy</td>
+<td align="left"><code>bool</code></td>
+<td align="left"><em>Optional:</em> Returns data locally if <code>True</code></td>
+<td align="left"><code>False</code></td>
+</tr>
+<tr>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=900/></td>
+<td align="left"><img width=250/></td>
+</tr>
+</tbody>
+</table>
+<h2 id="returns">Returns</h2>
+<hr>
+<p>void</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save_data(self, path, local_copy=False):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Saves data to given file path as .csv file in following format
+    (timestamp, state_tag_1, state_tag2,...state_tag_n)
+
+    ## Arguments
+    ---
+
+    | Argument   | Type     | Description                                | Default Value  |
+    | :------    | :--      | :---------                                 | :-----------   |
+    | path       | `string` | Path to save data                          | N/A            |
+    | local_copy | `bool`   | *Optional:* Returns data locally if `True` | `False`        |
+    |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+    ## Returns
+    ---
+    void
+    &#39;&#39;&#39;
+    t = np.array([self.tracking_objects[0].t_history]).T
+    header = &#39;time (s), &#39;
+    data = np.hstack([np.array(obj.history) for obj in self.tracking_objects])
+    for obj in self.tracking_objects:
+        header+= &#39;x{0}, y{0}, theta{0}, &#39;.format(obj.id)
+    data_out = np.hstack([t,data])
+    np.savetxt(path,data_out, delimiter=&#39;,&#39;, header=header)
+
+    if local_copy:
+        return t,S</code></pre>
+</details>
+</dd>
+<dt id="smarticletracking.Tracking.save_detections"><code class="name flex">
+<span>def <span class="ident">save_detections</span></span>(<span>self, detections=None, offset=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>Saves detection data to TrackingObject data class objects</p>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">detections</td>
+<td align="left"><code>list</code> of <code>dict</code></td>
+<td align="left">List of detection dictionaries</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=900/></td>
+<td align="left"><img width=250/></td>
+</tr>
+</tbody>
+</table>
+<h2 id="returns">Returns</h2>
+<hr>
+<p>void</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save_detections(self, detections=None, offset=None):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Saves detection data to TrackingObject data class objects
+
+    ## Arguments
+    ---
+
+    | Argument       | Type             | Description                    | Default Value  |
+    | :------        | :--              | :---------                     | :-----------   |
+    | detections     | `list` of `dict` | List of detection dictionaries | N/A            |
+    |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+    ## Returns
+    ---
+    void
+    &#39;&#39;&#39;
+    if detections is None:
+        detections = self.detections
+    if offset is None:
+        offset = [0,0]
+    t= time.time()-self.t0
+    ids_detected = [x[&#39;id&#39;]for x in detections]
+    for obj in self.tracking_objects:
+        if obj.id not in ids_detected:
+            obj.add_timestep(t, det = None, offset = offset)
+        else:
+            obj.add_timestep(t, det = detections[ids_detected.index(obj.id)], offset = offset)</code></pre>
+</details>
+</dd>
+<dt id="smarticletracking.Tracking.start"><code class="name flex">
+<span>def <span class="ident">start</span></span>(<span>self, cam)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>Initializes April tag detector and creates tracking objects. Additionally gets initial position of objects and sets time for t0</p>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">cam</td>
+<td align="left"><code>camera</code> object</td>
+<td align="left">Camera capture object</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=900/></td>
+<td align="left"><img width=250/></td>
+</tr>
+</tbody>
+</table>
+<h2 id="returns">Returns</h2>
+<hr>
+<p>None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def start(self,cam):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Initializes April tag detector and creates tracking objects. Additionally gets initial position of objects and sets time for t0
+
+    ## Arguments
+    ---
+
+    | Argument     | Type            | Description                                                        | Default Value  |
+    | :------      | :--             | :---------                                                         | :-----------   |
+    | cam       | `camera` object           | Camera capture object         | N/A            |
+    |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+    ## Returns
+    ---
+    None
+
+    &#39;&#39;&#39;
+
+    # set t0 for tracking data
+    self.t0 = time.time()
+
+    for obj in self.tracking_objects:
+        det = None
+        t_start = time.time()
+        while det is None:
+            # capture frame and region of interest, specified by crop region
+            cam.capture_frame()
+            # detect april tags in frame
+            detections = self.detect_frame(cam.frame)
+            ids_detected = [x[&#39;id&#39;] for x in detections]
+            if obj.id not in ids_detected:
+                det = None
+            else:
+                det = detections[ids_detected.index(obj.id)]
+            if (time.time()-t_start)&gt;5:
+                raise Exception(&#39;Tag {}  could not be found in frame&#39;.format(obj.id))
+
+        obj.init_detection(time.time()-t_start,det)
+        print(&#39;Tag {} detected in frame&#39;.format(obj.id))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="smarticletracking.TrackingObject"><code class="flex name class">
+<span>class <span class="ident">TrackingObject</span></span>
+<span>(</span><span>ID, history_length=None, tag_length=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>This class is a data struct for each April Tag in the frame to store its current state
+(x, y, theta) as well as a timestamped history of the state. The class also linearly
+interpolates over missed detections to smooth the data.</p>
+<p><strong>Public Attributes (for the user):</strong></p>
+<ul>
+<li><strong>id</strong>: April Tag ID (e.g. 1, 3, 16). This corresponds to the smarticle ID</li>
+<li><strong>x</strong>: state (x, y, theta) of most recent detection of tag</li>
+<li><strong>t</strong>: time of most recent detection of tag</li>
+<li><strong>history</strong>: history of states (x,y, theta) of tag</li>
+<li><strong>t_history</strong>: history of detection times of tag</li>
+</ul>
+<p><strong>Private Attributes (for the class):</strong></p>
+<ul>
+<li><strong>_missed frames</strong>: used for keeping track of missed frames that require linear interpolation</li>
+<li><strong>_object_detected</strong>: flag for indicating whether tag has been initially detected</li>
+</ul>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">ID</td>
+<td align="left"><code>int</code></td>
+<td align="left">ID of corresponding April Tag</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">history_length</td>
+<td align="left"><code>int</code></td>
+<td align="left">Optional max history length to record</td>
+<td align="left"><code>None</code></td>
+</tr>
+<tr>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=900/></td>
+<td align="left"><img width=250/></td>
+</tr>
+</tbody>
+</table></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TrackingObject(object):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    This class is a data struct for each April Tag in the frame to store its current state
+    (x, y, theta) as well as a timestamped history of the state. The class also linearly
+    interpolates over missed detections to smooth the data.
+
+    **Public Attributes (for the user):**
+
+    * **id**: April Tag ID (e.g. 1, 3, 16). This corresponds to the smarticle ID
+    * **x**: state (x, y, theta) of most recent detection of tag
+    * **t**: time of most recent detection of tag
+    * **history**: history of states (x,y, theta) of tag
+    * **t_history**: history of detection times of tag
+
+    **Private Attributes (for the class):**
+
+    * **_missed frames**: used for keeping track of missed frames that require linear interpolation
+    * **_object_detected**: flag for indicating whether tag has been initially detected
+    &#39;&#39;&#39;
+
+    def __init__(self, ID, history_length=None, tag_length=None):
+        &#39;&#39;&#39;
+        ## Arguments
+        ---
+
+        | Argument         | Type    | Description                           | Default Value  |
+        | :------          | :--     | :---------                            | :-----------   |
+        | ID               | `int`   | ID of corresponding April Tag         | N/A            |
+        | history_length   | `int`   | Optional max history length to record | `None`         |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        &#39;&#39;&#39;
+
+        # attributes to be accessed by user (Public)
+        self.id = ID
+        # if object is a smarticle (ID &lt;100), it has a known tag
+        # size which can be used for scaling
+        self.tag_length = tag_length
+        self.x = np.zeros(3)
+        self.t = 0
+        # use a deque data structure for history
+        # set a max length of 150 elements or about 10s of data
+        self.history = deque(maxlen=history_length)
+        self.t_history = deque(maxlen=history_length)
+        self.scale_factor = None
+
+        # attributes to be used within class (Private)
+        self._missed_frames = 0
+        self._object_detected = False
+
+    def _get_state(self, det, offset):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Returns state (x, y, theta) given detection and offset
+
+        ## Arguments
+        ---
+
+        | Argument| Type       | Description                                                                 | Default Value  |
+        | :------ | :--        | :---------                                                                  | :-----------   |
+        | det     | `dict`     | Detection of tag from AprilTag library                                      | N/A            |
+        | offset  | `np.array` | Two element list that specifies offset from detection frame to global frame | N/A            |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        `np.array` state [x, y, theta]
+        &#39;&#39;&#39;
+        # x and y position of center of tag
+        center = det[&#39;center&#39;]
+        # flip y axis from camera to put origin in bottom left corner
+        center[1]=center[1]
+        # point at center top of tag is average of top right and top left corners
+        center_top = (det[&#39;lb-rb-rt-lt&#39;][2]+det[&#39;lb-rb-rt-lt&#39;][3])/2.
+        center_top[1]=center_top[1]
+        # calculate theta as angle between center and cetner top and angle wrap so it is between 0 and 2pi
+        theta = np.mod(np.arctan2(center_top[1]-center[1],center_top[0]-center[0]),2*np.pi)
+        # record angle so that there are no discontinuities (prevent wrapping between 0 and 2*pi)
+        dtheta = theta-self.x[2]
+        dtheta = np.mod((np.pi+dtheta),2*np.pi)-np.pi
+        new_theta = self.x[2]+dtheta
+        return np.append(center+offset,new_theta)
+
+    def _get_scale_factor(self,det):
+        &#39;&#39;&#39;
+        DOC
+        &#39;&#39;&#39;
+        assert self.tag_length is not None, &#39;Tag length must be specified to get scale factor&#39;
+        bottom_left = det[&#39;lb-rb-rt-lt&#39;][0]
+        bottom_right = det[&#39;lb-rb-rt-lt&#39;][1]
+        top_right = det[&#39;lb-rb-rt-lt&#39;][2]
+        top_left = det[&#39;lb-rb-rt-lt&#39;][3]
+        diag_pixel = 0.5*(np.linalg.norm(bottom_left-top_right)+np.linalg.norm(bottom_right-top_left))
+        diag_len = np.sqrt(2)*self.tag_length
+        # scale factor pixel/unit mm
+        return diag_pixel/diag_len
+
+    def _smooth_missed_frames(self):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        smooths data by linearly interpolating over missed frames
+
+        ## Arguments
+        ---
+        N/A
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        # time of last sucessful detection before this most recent one
+        t0 = self.t_history[-(1+self._missed_frames)]
+        # calculate slope between points
+        m = (self.x-self.history[-(1+self._missed_frames)])/(self.t-t0)
+        # iterate through all of the missed frames
+        while self._missed_frames &gt; 0:
+            # calculate dt between missed frame and t0
+            dt = self.t_history[-(self._missed_frames)] - t0
+            # apply linear smoothing
+            self.history[-(self._missed_frames)] += m*dt
+            # move to next missed frame
+            self._missed_frames-=1
+
+
+    def init_detection(self, t, det, offset = None):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Initializes detections of tags with initial state and time of tag at first detection
+
+        ## Arguments
+        ---
+
+        | Argument| Type           | Description                                                                 | Default Value  |
+        | :------ | :--            | :---------                                                                  | :-----------   |
+        | t       | `int`          | Time of detection                                                           | N/A            |
+        | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
+        | offset  | `list` of `int`| Two element list that specifies offset from detection frame to global frame | `None`         |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        if offset is None:
+            offset = np.zeros(2)
+        self.x = self._get_state(det,offset)
+        if self.tag_length is not None:
+            self.scale_factor = self._get_scale_factor(det)
+        self.t = t
+        # add initial pose and time to history
+        self.t_history.append(self.t)
+        self.history.append(self.x)
+        # set detection flag to true
+        self._object_detected = True
+
+    def add_timestep(self, t, det=None, offset = None):
+        &#39;&#39;&#39;
+        ## Description
+        ---
+        Updates current state and history lists based on provided detection and also handles linear interpolation for missing detections
+
+        ## Arguments
+        ---
+
+        | Argument| Type           | Description                                                                 | Default Value  |
+        | :------ | :--            | :---------                                                                  | :-----------   |
+        | t       | `int`          | Time of detection                                                           | N/A            |
+        | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
+        | offset  | `list` of `int`| Two element list that specifies offset from global frame to detection frame | `None`         |
+        |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+        ## Returns
+        ---
+        void
+        &#39;&#39;&#39;
+        assert self._object_detected is True, &#34;Object not initially detected&#34;
+
+        self.t = t
+        # if offset is not provided, set offset to [0, 00] (no offset)
+        if offset is None:
+            offset = np.zeros(2)
+
+        # if object is not detected in this time frame carry over last beleif of
+        # object state and increment the missed frames counter
+        if det is None:
+            self._missed_frames +=1
+        else:
+            self.x = self._get_state(det,offset)
+            # linearly smooth missed frames
+            if self._missed_frames &gt; 0:
+                self._smooth_missed_frames()
+            # add most recent time step to history
+        self.history.append(self.x)
+        self.t_history.append(self.t)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="smarticletracking.TrackingObject.add_timestep"><code class="name flex">
+<span>def <span class="ident">add_timestep</span></span>(<span>self, t, det=None, offset=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>Updates current state and history lists based on provided detection and also handles linear interpolation for missing detections</p>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">t</td>
+<td align="left"><code>int</code></td>
+<td align="left">Time of detection</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">det</td>
+<td align="left"><code>dict</code></td>
+<td align="left">Detection of tag from AprilTag library</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">offset</td>
+<td align="left"><code>list</code> of <code>int</code></td>
+<td align="left">Two element list that specifies offset from global frame to detection frame</td>
+<td align="left"><code>None</code></td>
+</tr>
+<tr>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=900/></td>
+<td align="left"><img width=250/></td>
+</tr>
+</tbody>
+</table>
+<h2 id="returns">Returns</h2>
+<hr>
+<p>void</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_timestep(self, t, det=None, offset = None):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Updates current state and history lists based on provided detection and also handles linear interpolation for missing detections
+
+    ## Arguments
+    ---
+
+    | Argument| Type           | Description                                                                 | Default Value  |
+    | :------ | :--            | :---------                                                                  | :-----------   |
+    | t       | `int`          | Time of detection                                                           | N/A            |
+    | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
+    | offset  | `list` of `int`| Two element list that specifies offset from global frame to detection frame | `None`         |
+    |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+    ## Returns
+    ---
+    void
+    &#39;&#39;&#39;
+    assert self._object_detected is True, &#34;Object not initially detected&#34;
+
+    self.t = t
+    # if offset is not provided, set offset to [0, 00] (no offset)
+    if offset is None:
+        offset = np.zeros(2)
+
+    # if object is not detected in this time frame carry over last beleif of
+    # object state and increment the missed frames counter
+    if det is None:
+        self._missed_frames +=1
+    else:
+        self.x = self._get_state(det,offset)
+        # linearly smooth missed frames
+        if self._missed_frames &gt; 0:
+            self._smooth_missed_frames()
+        # add most recent time step to history
+    self.history.append(self.x)
+    self.t_history.append(self.t)</code></pre>
+</details>
+</dd>
+<dt id="smarticletracking.TrackingObject.init_detection"><code class="name flex">
+<span>def <span class="ident">init_detection</span></span>(<span>self, t, det, offset=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="description">Description</h2>
+<hr>
+<p>Initializes detections of tags with initial state and time of tag at first detection</p>
+<h2 id="arguments">Arguments</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">t</td>
+<td align="left"><code>int</code></td>
+<td align="left">Time of detection</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">det</td>
+<td align="left"><code>dict</code></td>
+<td align="left">Detection of tag from AprilTag library</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="left">offset</td>
+<td align="left"><code>list</code> of <code>int</code></td>
+<td align="left">Two element list that specifies offset from detection frame to global frame</td>
+<td align="left"><code>None</code></td>
+</tr>
+<tr>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=300/></td>
+<td align="left"><img width=900/></td>
+<td align="left"><img width=250/></td>
+</tr>
+</tbody>
+</table>
+<h2 id="returns">Returns</h2>
+<hr>
+<p>void</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def init_detection(self, t, det, offset = None):
+    &#39;&#39;&#39;
+    ## Description
+    ---
+    Initializes detections of tags with initial state and time of tag at first detection
+
+    ## Arguments
+    ---
+
+    | Argument| Type           | Description                                                                 | Default Value  |
+    | :------ | :--            | :---------                                                                  | :-----------   |
+    | t       | `int`          | Time of detection                                                           | N/A            |
+    | det     | `dict`         | Detection of tag from AprilTag library                                      | N/A            |
+    | offset  | `list` of `int`| Two element list that specifies offset from detection frame to global frame | `None`         |
+    |&lt;img width=300/&gt;|&lt;img width=300/&gt;|&lt;img width=900/&gt;|&lt;img width=250/&gt;|
+
+    ## Returns
+    ---
+    void
+    &#39;&#39;&#39;
+    if offset is None:
+        offset = np.zeros(2)
+    self.x = self._get_state(det,offset)
+    if self.tag_length is not None:
+        self.scale_factor = self._get_scale_factor(det)
+    self.t = t
+    # add initial pose and time to history
+    self.t_history.append(self.t)
+    self.history.append(self.x)
+    # set detection flag to true
+    self._object_detected = True</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="smarticletracking.Camera" href="#smarticletracking.Camera">Camera</a></code></h4>
+<ul class="">
+<li><code><a title="smarticletracking.Camera.capture_frame" href="#smarticletracking.Camera.capture_frame">capture_frame</a></code></li>
+<li><code><a title="smarticletracking.Camera.close" href="#smarticletracking.Camera.close">close</a></code></li>
+<li><code><a title="smarticletracking.Camera.set_roi_dims" href="#smarticletracking.Camera.set_roi_dims">set_roi_dims</a></code></li>
+<li><code><a title="smarticletracking.Camera.show_frame" href="#smarticletracking.Camera.show_frame">show_frame</a></code></li>
+<li><code><a title="smarticletracking.Camera.write_frame" href="#smarticletracking.Camera.write_frame">write_frame</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="smarticletracking.Tracking" href="#smarticletracking.Tracking">Tracking</a></code></h4>
+<ul class="two-column">
+<li><code><a title="smarticletracking.Tracking.detect_frame" href="#smarticletracking.Tracking.detect_frame">detect_frame</a></code></li>
+<li><code><a title="smarticletracking.Tracking.draw_lines" href="#smarticletracking.Tracking.draw_lines">draw_lines</a></code></li>
+<li><code><a title="smarticletracking.Tracking.get_centroid" href="#smarticletracking.Tracking.get_centroid">get_centroid</a></code></li>
+<li><code><a title="smarticletracking.Tracking.get_scale_factor" href="#smarticletracking.Tracking.get_scale_factor">get_scale_factor</a></code></li>
+<li><code><a title="smarticletracking.Tracking.q_pressed" href="#smarticletracking.Tracking.q_pressed">q_pressed</a></code></li>
+<li><code><a title="smarticletracking.Tracking.save_data" href="#smarticletracking.Tracking.save_data">save_data</a></code></li>
+<li><code><a title="smarticletracking.Tracking.save_detections" href="#smarticletracking.Tracking.save_detections">save_detections</a></code></li>
+<li><code><a title="smarticletracking.Tracking.start" href="#smarticletracking.Tracking.start">start</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="smarticletracking.TrackingObject" href="#smarticletracking.TrackingObject">TrackingObject</a></code></h4>
+<ul class="">
+<li><code><a title="smarticletracking.TrackingObject.add_timestep" href="#smarticletracking.TrackingObject.add_timestep">add_timestep</a></code></li>
+<li><code><a title="smarticletracking.TrackingObject.init_detection" href="#smarticletracking.TrackingObject.init_detection">init_detection</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.1</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

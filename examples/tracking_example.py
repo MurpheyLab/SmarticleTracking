@@ -9,9 +9,11 @@ from tracking import Tracking
 from camera import Camera
 import time
 
-
+# constants
 SMARTICLE_TAG_LENGTH_MM = 11.2
 RING_DIAM_MM = 200
+# roi (region of interest) defines square to look for tags
+# currently set to square with side length 1.5 times the ring diameter
 roi_safety_factor = 1.5
 
 
@@ -58,6 +60,7 @@ ring_ids = [100, 101, 102]
 tag_ids = smart_ids+ring_ids
 values = []
 # make length_dict, relating tag_id to tag_dimensions
+# smarticle tags get dimension set by constat SMARTICLE_TAG_LENGTH_MM)
 for id in tag_ids:
     if id in smart_ids:
         values.append(SMARTICLE_TAG_LENGTH_MM)

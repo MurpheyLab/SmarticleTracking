@@ -3,12 +3,12 @@
 # Created Nov 19, 2019
 # Alex Samland (alexsamland@u.northwestern.edu)
 
-import numpy as np
-import cv2
-from copy import deepcopy
-from apriltag import *
-import time
-from tracking_object import TrackingObject
+# import numpy as np
+# import cv2
+# from copy import deepcopy
+# from apriltag import *
+# import time
+# from tracking_object import TrackingObject
 
 
 ################################################################################
@@ -21,13 +21,6 @@ class Tracking(object):
     ---
     Class for tracking multiple AprilTag objects and managing use of webcam with OpenCV
 
-    **Public Attributes (for the user):**
-
-    * TODO
-
-    **Private Attributes (for the class):**
-
-    * TODO
     '''
 
 
@@ -77,13 +70,39 @@ class Tracking(object):
 
     @classmethod
     def q_pressed(self):
+        '''
+        ## Description
+        ---
+        Checks whether 'q' key has been pressed
+
+        ## Returns
+        ---
+        `bool`
+
+        '''
         return cv2.waitKey(1) & 0xFF == ord('q')
 
 
 
     def start(self,cam):
-        '''Initializes April tag detector and creates tracking objects.
-        Additionally gets initial position of objects and sets time for t0'''
+        '''
+        ## Description
+        ---
+        Initializes April tag detector and creates tracking objects. Additionally gets initial position of objects and sets time for t0
+
+        ## Arguments
+        ---
+
+        | Argument     | Type            | Description                                                        | Default Value  |
+        | :------      | :--             | :---------                                                         | :-----------   |
+        | cam       | `camera` object           | Camera capture object         | N/A            |
+        |<img width=300/>|<img width=300/>|<img width=900/>|<img width=250/>|
+
+        ## Returns
+        ---
+        None
+
+        '''
 
         # set t0 for tracking data
         self.t0 = time.time()
@@ -163,6 +182,24 @@ class Tracking(object):
                 obj.add_timestep(t, det = detections[ids_detected.index(obj.id)], offset = offset)
 
     def draw_lines(self, frame, ids):
+        '''
+        ## Description
+        ---
+        Draws line on screen showing orientation of tags
+
+        ## Arguments
+        ---
+
+        | Argument| Type         | Description              | Default Value  |
+        | :------ | :--          | :---------               | :-----------   |
+        | frame     | `np.array` | Frame to draw lines on  | N/A            |
+        | ids     | `np.array` | List of tag IDs for wich to draw lines  | N/A            |
+        |<img width=300/>|<img width=300/>|<img width=900/>|<img width=250/>|
+
+        ## Returns
+        ---
+        `None`
+        '''
         for obj in self.tracking_objects:
             if obj.id in ids:
                 # draw line showing orientation of tag
@@ -171,6 +208,24 @@ class Tracking(object):
                 (0,255,0),2)
 
     def get_centroid(self, tag_ids):
+        '''
+        ## Description
+        ---
+        Gets centroid of specified tags
+
+        ## Arguments
+        ---
+
+        | Argument| Type         | Description              | Default Value  |
+        | :------ | :--          | :---------               | :-----------   |
+        | frame     | `np.array` | Frame to draw lines on  | N/A            |
+        | tag_ids     | `np.array` | List of tag IDs for wich to draw lines  | N/A            |
+        |<img width=300/>|<img width=300/>|<img width=900/>|<img width=250/>|
+
+        ## Returns
+        ---
+        `np.array`
+        '''
         ring_tag_xy = [obj.x[:2] for obj in self.tracking_objects if obj.id in tag_ids]
         return sum(ring_tag_xy)/len(ring_tag_xy)
 

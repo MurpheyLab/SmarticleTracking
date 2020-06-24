@@ -3,12 +3,12 @@
 # Created Nov 19, 2019
 # Alex Samland (alexsamland@u.northwestern.edu)
 
-# import numpy as np
-# import cv2
-# from copy import deepcopy
-# from apriltag import *
-# import time
-# from tracking_object import TrackingObject
+import numpy as np
+import cv2
+from copy import deepcopy
+from apriltag import *
+import time
+from tracking_object import TrackingObject
 
 
 ################################################################################

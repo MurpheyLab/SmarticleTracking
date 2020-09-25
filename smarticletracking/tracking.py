@@ -176,6 +176,7 @@ class Tracking(object):
         t= time.time()-self.t0
         ids_detected = [x['id']for x in detections]
         for obj in self.tracking_objects:
+            # if id not detected in this frame
             if obj.id not in ids_detected:
                 obj.add_timestep(t, det = None, offset = offset)
             else:

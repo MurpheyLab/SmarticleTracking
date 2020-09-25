@@ -47,7 +47,7 @@ class Camera(object):
         self.frame_height = int(self.cap.get(4))
 
         if roi_dims is None:
-            self.roi_dims = [0,0,self.frame_height,self.frame_width]
+            self.roi_dims = [0,0,self.frame_width,self.frame_height]
         else:
             assert len(roi_dims) is 4, 'roi_dims is 4 element list of form: [x, y, w, h]'
             self.roi_dims = roi_dims

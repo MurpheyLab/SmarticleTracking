@@ -55,7 +55,7 @@ class TrackingObject(object):
         self.x = np.zeros(3)
         self.t = 0
         # use a deque data structure for history
-        # set a max length of 150 elements or about 10s of data
+        # set a max length specified by input
         self.history = deque(maxlen=history_length)
         self.t_history = deque(maxlen=history_length)
         self.scale_factor = None
